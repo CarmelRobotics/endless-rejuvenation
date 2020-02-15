@@ -36,7 +36,7 @@ public class Vision extends SubsystemBase {
                 }
             }
         }
-        return 0.0
+        return 0.0;
 
     }
     public double getTX() {

@@ -56,10 +56,6 @@ public class Turret extends SubsystemBase {
    turret.updateDutyCycle((0.25*0.5+1.5)/4);;
    return enc_turret.get();
  }
-  
-  public void stop(){
-    shooter.set(0);
-  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
