@@ -10,10 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.Constants;
 import frc.robot.Constants.ControlPanelArmConstants;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.controlpanelarm.*;
 import frc.robot.commands.turret.*;
@@ -37,6 +39,7 @@ public class RobotContainer {
   private final JoystickButton b_rotControl;
   private final JoystickButton b_turretOnOff;
   private final JoystickButton b_colorControl;
+  private final JoystickButton b_getEncoderVal;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -44,16 +47,17 @@ public class RobotContainer {
     // Configure the button bindings
     
     b_armExtend = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_FWD_BUTTON);
-    b_armRetract = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_FWD_BUTTON);
+    b_armRetract = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_REVERSE_BUTTON);
     b_rotControl = new JoystickButton(stick_right, ControlPanelArmConstants.ROT_CONTROL_BUTTON);
     b_colorControl = new JoystickButton(stick_right, ControlPanelArmConstants.POS_CONTROL_BUTTON);
     b_turretOnOff = new JoystickButton(stick_right, 1);
+    b_getEncoderVal = new JoystickButton(stick_right, TurretConstants.TURRETGETPWM);
     configureButtonBindings();
     /*
     drive.setDefaultCommand(new RunCommand(() -> 
       drive.tankDrive(
         -stick_left.getY(), 
-        -stick_right.getY())
+        -stick_right.getY()) 
       ,drive));
     */
     // drive.setDefaultCommand(new RunCommand(() -> 
@@ -76,7 +80,16 @@ public class RobotContainer {
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
     b_turretOnOff.whileHeld(new Fire(turret));
-  }
+    b_getEncoderVal.whileHeld(new RunCommand(() -> 
+      turret.resetTurret()
+      ,turret
+        ));
+    turret.setDefaultCommand(new RunCommand(() -> 
+      turret.getEncoderValue()
+      ,turret
+        ));
+
+    }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

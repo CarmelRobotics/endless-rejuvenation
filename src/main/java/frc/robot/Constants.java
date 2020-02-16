@@ -48,6 +48,8 @@ public final class Constants {
         public static final int SHOOTER_CAN_LEFT = 1;
         public static final int SHOOTER_CAN_RIGHT = 2;
         public static final int SUSAN_PWM = 6;
+        public static final int TURRETGETPWM = 8;
+        public static final int WINDOW_MOTOR_DIO = 5;
     }
     public static final class EncoderConstants {
         public static final int ENCODER_1_DIO1 = 2;

@@ -40,7 +40,7 @@ public class ControlPanelArm extends SubsystemBase {
     spin = new DigitalOutput(4);
     spin.enablePWM(0.375);
     spin.setPWMRate(250);
-    /* extender = new DoubleSolenoid(ControlPanelArmConstants.ARM_SOLENOID_FORWARD_CHANNEL, ControlPanelArmConstants.ARM_SOLENOID_REVERSE_CHANNEL); */
+    extender = new DoubleSolenoid(ControlPanelArmConstants.ARM_SOLENOID_FORWARD_CHANNEL, ControlPanelArmConstants.ARM_SOLENOID_REVERSE_CHANNEL);
   }
 
   /**
