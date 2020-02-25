@@ -7,17 +7,22 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants.EncoderConstants;
 import frc.robot.Constants.TurretConstants;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PWMSparkMax;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -28,36 +33,103 @@ public class Turret extends SubsystemBase {
   private SpeedController turretAngleL, turretAngleR, susan;
   private SpeedControllerGroup shooter;
   private DigitalOutput turret;
-  AnalogEncoder encoder = new AnalogEncoder(new AnalogInput(3));
+  private DigitalOutput turretWheel1;
+  private DigitalOutput turretWheel2;
+  private PWMSparkMax Shooter1;
+  private PWMSparkMax Shooter2;
+  private PWMVictorSPX elevator;
+  private VictorSP windowMotor;
+  AnalogEncoder encoder = new AnalogEncoder(new AnalogInput(EncoderConstants.SHOOTER_ENCODER_3_PORT));
   public Turret() {
     shooterL = new CANSparkMax(TurretConstants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
     shooterR = new CANSparkMax(TurretConstants.SHOOTER_CAN_RIGHT, MotorType.kBrushless);
-    encoder.reset();
+    windowMotor = new VictorSP(TurretConstants.WINDOW_PWM_MOTOR);
+    //encoder.reset();
     turret = new DigitalOutput(5);
-  }
 
+   // Shooter1 = new PWMSparkMax(9);
+    //Shooter2 = new PWMSparkMax(8);
+    //Shooter1.setInverted(true);
+
+    //turretWheel1 = new DigitalOutput(8);
+    //turretWheel2 = new DigitalOutput(9);
+    //turretWheel1.enablePWM(0);
+    //turretWheel1.setPWMRate(200);
+    //turretWheel2.enablePWM(0);
+    //turretWheel2.setPWMRate(200);
+   // elevator = new PWMVictorSPX(TurretConstants.ELEVATOR_PWM_MOTOR);
+
+  }
+  public double getAngleToTurnTo(double ballVel,double targetDist, double gravity) {
+    //ft per second
+    double targetHeight = 98.25;
+    double turretHeight = 20;
+    double deltaY = targetHeight-turretHeight;
+    double value1 = Math.sqrt(Math.pow(ballVel, 4)-gravity*(gravity*Math.pow(targetDist, 2)+2*deltaY*Math.pow(ballVel,2)));
+    if (ballVel > value1) {
+      return (Math.atan(ballVel-value1))/(gravity*targetDist);
+    }else {
+      return (Math.atan(ballVel+value1))/(gravity*targetDist);
+    }
+  }
+  public double getEncoderValue() {
+    return 
+  }
   public void shoot(){
     // shooter.set(1);
     if (shooterL == null) {
-      System.out.println("LEFT SHOOTER IS NULL");
-    }else {
-      shooterL.set(0.75);
-      shooterR.set(-0.75);
-    }
+       System.out.println("LEFT SHOOTER IS NULL");
+     }else {
+       shooterL.set(0.75);
+       shooterR.set(-0.75);
+     }
+
+  }
+
+  public void rotateUp(){
+
+    windowMotor.setSpeed(-0.25);
+
+  }
+
+  public void rotateDown(){
+
+    windowMotor.setSpeed(0.25);
+  }
+
+  public void rotateStop(){
+
+    windowMotor.setSpeed(0);
   }
 
   public void stop(){
     if (shooterL == null) {
-      System.out.println("LEFT SHOOTER IS NULL");
-    }else {
-      shooterL.set(0);
-      shooterR.set(0);  
-    }
+       System.out.println("LEFT SHOOTER IS STILL NULL");
+     }else {
+       shooterL.set(0);
+       shooterR.set(0);  
+     }
   }
   public double getEncoderValue() {
     System.out.println("ENCODERVALUE: " + encoder.get());
     SmartDashboard.putNumber("ENCODER VALUE", encoder.get());
     return encoder.get();
+  }
+  public void shootDIO(double speed) {
+    // turretWheel1.enablePWM((speed*0.5+1.5)/4);
+    // turretWheel2.enablePWM((-speed*0.5+1.5)/4);
+    // turretWheel1.updateDutyCycle((speed*0.5+1.5)/4);
+    // turretWheel2.updateDutyCycle((-speed*0.5+1.5)/4);
+    elevator.setSpeed(-1.0);
+    Shooter1.set(speed);
+    Shooter2.set(speed);
+  }
+  public void stopDIO() {
+     // turretWheel1.disablePWM();
+     // turretWheel2.disablePWM();
+    Shooter2.stopMotor();
+    Shooter2.stopMotor();
+    elevator.stopMotor();
   }
   public void resetTurret() {
     encoder.reset();

@@ -47,15 +47,19 @@ public final class Constants {
         public static final int TURRET_PWM_RIGHT = 5;
         public static final int SHOOTER_CAN_LEFT = 1;
         public static final int SHOOTER_CAN_RIGHT = 2;
-        public static final int SUSAN_PWM = 6;
+        public static final int TURRET_ROTATE_UP_BUTTON = 7;
+        public static final int TURRET_ROTATE_DOWN_BUTTON = 9;
+        // public static final int SUSAN_PWM = 6;
         public static final int TURRETGETPWM = 8;
-        public static final int WINDOW_MOTOR_DIO = 5;
+        public static final int WINDOW_PWM_MOTOR = 9;
+        public static final int ELEVATOR_PWM_MOTOR = 8;
     }
     public static final class EncoderConstants {
-        public static final int ENCODER_1_DIO1 = 2;
-        public static final int ENCODER_1_DIO2 = 3;
-        public static final int ENCODER_2_DIO1 = 0;
-        public static final int ENCODER_2_DIO2 = 1;
+        // public static final int ENCODER_1_DIO1 = 2;
+        // public static final int ENCODER_1_DIO2 = 3;
+        // public static final int ENCODER_2_DIO1 = 0;
+        // public static final int ENCODER_2_DIO2 = 1;
+        public static final int SHOOTER_ENCODER_3_PORT = 0;// analog input port 0
         public static final double DISTANCE_PER_PULSE = 0.5*Math.PI/1024.;
     }
     
@@ -90,13 +94,16 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int ROLLER_CHANNEL = 00;
+        public static final int ROLLER_CHANNEL = 6;
+        public static final int INTAKE_UP = 8;
         public static final int DROPPER_CHANNEL = 5;
         public static final int AGITATOR_CHANNEL = 4;
         public static final int FEEDER_CHANNEL = 00;
 
         public static final int BOTTOM_CHANNEL = 00;
         public static final int TOP_CHANNEL = 00;
+
+        public static final int INTAKE_BUTTON = 12;
     }
     
     public static final class HangerConstants {
