@@ -72,9 +72,6 @@ public class Turret extends SubsystemBase {
       return (Math.atan(ballVel+value1))/(gravity*targetDist);
     }
   }
-  public double getEncoderValue() {
-    return 
-  }
   public void shoot(){
     // shooter.set(1);
     if (shooterL == null) {
