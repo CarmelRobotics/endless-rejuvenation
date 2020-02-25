@@ -79,6 +79,9 @@ public final class Constants {
         /* i2C port */
         public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
 
+        /* DIO */
+        public static final int SPIN_CHANNEL = 4;
+        public static final int SPACER_CHANNEL = 5;
         /* PCM ports */
         public static final int ARM_SOLENOID_FORWARD_CHANNEL = 0;
         public static final int ARM_SOLENOID_REVERSE_CHANNEL = 1;

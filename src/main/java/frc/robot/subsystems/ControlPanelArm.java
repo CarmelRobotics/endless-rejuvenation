@@ -8,10 +8,12 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.ControlPanelArmConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -29,7 +31,9 @@ public class ControlPanelArm extends SubsystemBase {
   private ColorMatch cm;
   private DoubleSolenoid extender;
   private DigitalOutput spin;
-  
+  private DigitalInput spacer;
+  private boolean spacerCheck;
+
   public ControlPanelArm() {
     colorSensor = new ColorSensorV3(ControlPanelArmConstants.I2C_PORT);
     cm = new ColorMatch();
@@ -37,7 +41,9 @@ public class ControlPanelArm extends SubsystemBase {
     cm.addColorMatch(ControlPanelArmConstants.GREEN);
     cm.addColorMatch(ControlPanelArmConstants.RED);
     cm.addColorMatch(ControlPanelArmConstants.YELLOW); 
-    spin = new DigitalOutput(4);
+    spin = new DigitalOutput(ControlPanelArmConstants.SPIN_CHANNEL);
+    spacer = new DigitalInput(ControlPanelArmConstants.SPACER_CHANNEL);
+    spacerCheck = false;
     spin.enablePWM(0.375);
     spin.setPWMRate(250);
     extender = new DoubleSolenoid(ControlPanelArmConstants.ARM_SOLENOID_FORWARD_CHANNEL, ControlPanelArmConstants.ARM_SOLENOID_REVERSE_CHANNEL);
@@ -97,6 +103,12 @@ public class ControlPanelArm extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    
+    if (spacer.get() && !spacerCheck) {
+      spacerCheck = true;
+      SmartDashboard.putString("alert", "Arm limit switch activated!");
+    } else if (!spacer.get() && spacerCheck) {
+      spacerCheck = false;
+      SmartDashboard.putString("alert", "Arm limit switch deactivated");
+    }
   }
 }
