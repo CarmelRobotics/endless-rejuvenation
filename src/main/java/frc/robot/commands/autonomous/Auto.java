@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
+import frc.robot.commands.PivotCommand;
 import frc.robot.commands.shooter.Fire;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -20,9 +22,9 @@ public class Auto extends SequentialCommandGroup {
   /**
    * Creates a new Auto.
    */
-  public Auto(DriveTrain d, Intake i, Turret t) {
+  public Auto(DriveTrain d, Intake i, Turret t, Vision v) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    addCommands(new AutoMove(d, 5), new AutoTurn(d, 100, 0, 0), new Fire(i,t));
+    addCommands(new AutoMove(d, 5), new PivotCommand(v, d), new Fire(i,t,v));
   }
 }

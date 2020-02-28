@@ -98,8 +98,8 @@ public final class Constants {
         public static final int AGITATOR_CHANNEL = 4;
         public static final int FEEDER_CHANNEL = 00;
 
-        public static final int BOTTOM_CHANNEL = 00;
-        public static final int TOP_CHANNEL = 00;
+        public static final int BOTTOM_SWITCH_CHANNEL = 00;
+        public static final int TOP_SWITCH_CHANNEL = 00;
     }
     
     public static final class HangerConstants {

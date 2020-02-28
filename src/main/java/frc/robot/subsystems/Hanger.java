@@ -27,5 +27,9 @@ public class Hanger extends SubsystemBase {
     
   }
   public void climb(double speed) {
+    
+  }
+  public void hook(DoubleSolenoid.Value v) {
+    banger.set(v);
   }
 }

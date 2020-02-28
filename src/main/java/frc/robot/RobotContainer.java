@@ -58,14 +58,14 @@ public class RobotContainer {
       drive.tankDrive(
         -stick_left.getY(), 
         -stick_right.getY()) 
-      ,drive));
+      ,drive));/
     */
-    // drive.setDefaultCommand(new RunCommand(() -> 
-    //   drive.arcadeDrive(
-    //     stick_right.getY(), 
-    //     stick_right.getX())
-    //     ,drive
-    //     ));
+    drive.setDefaultCommand(new RunCommand(() -> 
+      drive.arcadeDrive(
+         stick_right.getY(), 
+         stick_right.getX())
+         ,drive
+         ));
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

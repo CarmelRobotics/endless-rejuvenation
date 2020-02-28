@@ -31,8 +31,8 @@ public class Intake extends SubsystemBase {
     roller = new DigitalOutput(IntakeConstants.ROLLER_CHANNEL);
     agitator = new Talon(IntakeConstants.AGITATOR_CHANNEL);
     feeder = new DigitalOutput(IntakeConstants.FEEDER_CHANNEL);
-    bottomSwitch = new DigitalInput(IntakeConstants.BOTTOM_CHANNEL);
-    topSwitch = new DigitalInput(IntakeConstants.TOP_CHANNEL);
+    bottomSwitch = new DigitalInput(IntakeConstants.BOTTOM_SWITCH_CHANNEL);
+    topSwitch = new DigitalInput(IntakeConstants.TOP_SWITCH_CHANNEL);
     roller.enablePWM(0.375);
     roller.setPWMRate(250);
     feeder.enablePWM(0.375);
@@ -59,6 +59,6 @@ public class Intake extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
   }
 }

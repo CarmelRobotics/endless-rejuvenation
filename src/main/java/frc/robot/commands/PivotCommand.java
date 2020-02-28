@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Vision;
 
-/**
- * An example command.  You can replace me with your own command.
- */
 public class PivotCommand extends CommandBase {
   Vision vision;
   double P = 1.8;

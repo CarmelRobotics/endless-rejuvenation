@@ -10,14 +10,17 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 public class Fire extends CommandBase {
   Intake intake;
   Turret turret;
-  public Fire(Intake i, Turret t) {
-    addRequirements(i, t);
+  Vision vision;
+  public Fire(Intake i, Turret t, Vision v) {
+    addRequirements(i, t, v);
     intake = i;
     turret = t;
+    vision = v;
   }
 
   // Called when the command is initially scheduled.
