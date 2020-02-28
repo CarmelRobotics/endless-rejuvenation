@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants.EncoderConstants;
 import frc.robot.Constants.TurretConstants;
+
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -25,8 +27,9 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj.SerialPort;
 public class Turret extends SubsystemBase {
+  private AHRS navx = new AHRS(SerialPort.Port.kUSB);
 
   private CANSparkMax shooterL;
   private CANSparkMax shooterR;
@@ -39,12 +42,14 @@ public class Turret extends SubsystemBase {
   private PWMSparkMax Shooter2;
   private PWMVictorSPX elevator;
   private VictorSP windowMotor;
+  
   AnalogEncoder encoder = new AnalogEncoder(new AnalogInput(EncoderConstants.SHOOTER_ENCODER_3_PORT));
   public Turret() {
     shooterL = new CANSparkMax(TurretConstants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
     shooterR = new CANSparkMax(TurretConstants.SHOOTER_CAN_RIGHT, MotorType.kBrushless);
     windowMotor = new VictorSP(TurretConstants.WINDOW_PWM_MOTOR);
     //encoder.reset();
+     
     turret = new DigitalOutput(5);
 
    // Shooter1 = new PWMSparkMax(9);
@@ -58,7 +63,7 @@ public class Turret extends SubsystemBase {
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
    // elevator = new PWMVictorSPX(TurretConstants.ELEVATOR_PWM_MOTOR);
-
+    navx.reset();
   }
   public double getAngleToTurnTo(double ballVel,double targetDist, double gravity) {
     //ft per second
@@ -107,11 +112,13 @@ public class Turret extends SubsystemBase {
        shooterR.set(0);  
      }
   }
+
   public double getEncoderValue() {
     System.out.println("ENCODERVALUE: " + encoder.get());
     SmartDashboard.putNumber("ENCODER VALUE", encoder.get());
-    return encoder.get();
+    return navx.getAngle();
   }
+  
   public void shootDIO(double speed) {
     // turretWheel1.enablePWM((speed*0.5+1.5)/4);
     // turretWheel2.enablePWM((-speed*0.5+1.5)/4);
@@ -143,6 +150,7 @@ public class Turret extends SubsystemBase {
  }
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("ENCODER VALUE", getEncoderValue());
     // This method will be called once per scheduler run
   }
 }

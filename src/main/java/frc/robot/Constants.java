@@ -89,21 +89,22 @@ public final class Constants {
         /*Button Mapping*/
         public static final int ARM_FWD_BUTTON = 5;
         public static final int ARM_REVERSE_BUTTON = 3;
-        public static final int ROT_CONTROL_BUTTON = 12;
-        public static final int POS_CONTROL_BUTTON = 11;
+        public static final int ROT_CONTROL_BUTTON = 10;
+        public static final int POS_CONTROL_BUTTON = 9;
     }
 
     public static final class IntakeConstants {
+
         public static final int ROLLER_CHANNEL = 6;
-        public static final int INTAKE_UP = 8;
-        public static final int DROPPER_CHANNEL = 5;
+        public static final int INTAKE_UP = 11;
+        public static final int WINDOW_CHANNEL = 5;
         public static final int AGITATOR_CHANNEL = 4;
         public static final int FEEDER_CHANNEL = 00;
 
         public static final int BOTTOM_CHANNEL = 00;
         public static final int TOP_CHANNEL = 00;
-
-        public static final int INTAKE_BUTTON = 12;
+        public static final int LIMIT_SWITCH = 9;
+        public static final int INTAKE_DOWN_BUTTON = 12;
     }
     
     public static final class HangerConstants {

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,8 +36,8 @@ public class RobotContainer {
   //Subsystems
   //  private final DriveTrain drive = new DriveTrain();
   private final ControlPanelArm cpa = new ControlPanelArm();
-  //  private final Turret turret = new Turret();
-  //  private final Intake intake = new Intake();
+   private final Turret turret = new Turret();
+  private final Intake intake = new Intake();
   //Joysticks
   private final Joystick stick_right = Constants.ContainerConstants.JOYSTICK;
   private final JoystickButton b_armExtend;
@@ -53,7 +55,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    b_Intake = new JoystickButton(stick_right, IntakeConstants.INTAKE_BUTTON);
+    b_Intake = new JoystickButton(stick_right, IntakeConstants.INTAKE_DOWN_BUTTON);
     b_intakeUp = new JoystickButton(stick_right, IntakeConstants.INTAKE_UP);
     b_armExtend = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_FWD_BUTTON);
     b_armRetract = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_REVERSE_BUTTON);
@@ -87,13 +89,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    
     b_armExtend.whenPressed(new ArmExtend(cpa));
     b_armRetract.whenPressed(new ArmRetract(cpa));
-    // b_Intake.whileHeld(new IntakeDown(intake));
+    b_Intake.whileHeld(new IntakeDown(intake));
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
-    // b_intakeUp.whenHeld(new IntakeUp(intake));
+    b_intakeUp.whenHeld(new IntakeUp(intake));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
-    // b_turretOnOff.whileHeld(new Fire(turret));
+    b_turretOnOff.whileHeld(new Fire(turret));
     // b_turretRotateUp.whileHeld(new Rotate_Up(turret));
     // b_turretRotateDown.whileHeld(new Rotate_Down(turret));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
