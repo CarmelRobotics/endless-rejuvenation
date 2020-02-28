@@ -30,7 +30,7 @@ public class IntakeUp extends CommandBase {
   @Override
   public void execute() {
     intake.in(0.0);
-    intake.move(-0.5);
+    intake.move(-0.8);
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +42,6 @@ public class IntakeUp extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return intake.getLimitSwitch();
   }
 }

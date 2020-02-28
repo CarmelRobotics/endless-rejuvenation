@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
@@ -18,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private SpeedController dropper;
+  private SpeedController window;
   // private DigitalOutput roller;
   private VictorSP agitator = new VictorSP(IntakeConstants.AGITATOR_CHANNEL);
-  
+  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.LIMIT_SWITCH);
   // private DigitalOutput feeder;
   // private DigitalInput bottomSwitch;
   // private DigitalInput topSwitch;
@@ -31,7 +32,7 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   public Intake() {
-    dropper = new Talon(IntakeConstants.DROPPER_CHANNEL);
+    window = new VictorSP(IntakeConstants.WINDOW_CHANNEL);
     // roller = new DigitalOutput(IntakeConstants.ROLLER_CHANNEL);
     roller = new PWMVictorSPX(IntakeConstants.ROLLER_CHANNEL);
     // agitator = new Talon(IntakeConstants.AGITATOR_CHANNEL);
@@ -45,11 +46,18 @@ public class Intake extends SubsystemBase {
     ballsLoaded = 3;
     roller.setInverted(true);
   }
+  public boolean getLimitSwitch() {
+    return limit_switch.get();
+  }
   public void move(double speed) {
-    dropper.set(speed);
+    System.out.println("speen");
+    window.set(speed);
+  }
+  public void stopWindow() {
+    window.stopMotor();
   }
   public void in(double speed) {
-    roller.setSpeed(0.5);
+    roller.setSpeed(speed);
   }
   public void stopRoller() {
     roller.stopMotor();
