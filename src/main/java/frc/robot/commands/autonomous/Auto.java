@@ -12,6 +12,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.robot.Constants.ThreeWaySwitchConstants;
 import frc.robot.commands.PivotCommand;
 import frc.robot.commands.shooter.Fire;
 
@@ -23,14 +24,22 @@ public class Auto extends SequentialCommandGroup {
    * Creates a new Auto.
    */
   public Auto(DriveTrain d, Intake i, Turret t, Vision v) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    addCommands(
-              new AutoMove(d, 13),
-              new AutoTurn(d, -90, 1, 0.5),
-              new AutoMove(d, 18),
-              new AutoTurn(d, -90, 1, 0.5),
-              new PivotCommand(v, d),
-              new Fire(i,t,v));
+    if (ThreeWaySwitchConstants.SWITCH_1 == null ||
+        ThreeWaySwitchConstants.SWITCH_3 == null) {
+          System.out.println("NULL SWITCH DETECTED: USING AUTO 1 AS DEFAULT");
+          addCommands(new Auto1(d,i,t,v));
+    }else {
+      if (ThreeWaySwitchConstants.SWITCH_1.get() == true) {
+        addCommands(new Auto1(d,i,t,v));
+        System.out.println("USING AUTO 1");
+      } else if (ThreeWaySwitchConstants.SWITCH_3.get() == true) {
+        addCommands(new Auto3(d,i,t,v));
+        System.out.println("USING AUTO 3");
+      } else {
+        addCommands(new Auto2(d,i,t,v));
+        System.out.println("USING AUTO 2");
+      }
+    }
+    
     }
 }

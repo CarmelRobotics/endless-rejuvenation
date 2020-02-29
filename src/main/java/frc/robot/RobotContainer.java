@@ -21,6 +21,7 @@ import frc.robot.Constants.ControlPanelArmConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.Auto;
 import frc.robot.commands.controlpanelarm.*;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.IntakeDown;
@@ -124,6 +125,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new Auto(drive, intake, turret, vision);
   }
 }

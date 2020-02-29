@@ -79,6 +79,7 @@ public class Turret extends SubsystemBase {
   }
   public void shoot(){
     // shooter.set(1);
+    elevator.setSpeed(-1.0);
     if (shooterL == null) {
        System.out.println("LEFT SHOOTER IS NULL");
      }else {
@@ -124,7 +125,6 @@ public class Turret extends SubsystemBase {
     // turretWheel2.enablePWM((-speed*0.5+1.5)/4);
     // turretWheel1.updateDutyCycle((speed*0.5+1.5)/4);
     // turretWheel2.updateDutyCycle((-speed*0.5+1.5)/4);
-    elevator.setSpeed(-1.0);
     Shooter1.set(speed);
     Shooter2.set(speed);
   }
