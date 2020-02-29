@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private SpeedController window;
+  private SpeedController arm;
   // private DigitalOutput roller;
-  private VictorSP agitator = new VictorSP(IntakeConstants.AGITATOR_CHANNEL);
-  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.LIMIT_SWITCH);
+  private VictorSP agitator = new VictorSP(IntakeConstants.AGITATOR_PWM);
+  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.TOP_LIMITSWITCH);
   // private DigitalOutput feeder;
   // private DigitalInput bottomSwitch;
   // private DigitalInput topSwitch;
@@ -32,9 +32,9 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   public Intake() {
-    window = new VictorSP(IntakeConstants.WINDOW_CHANNEL);
+    arm = new VictorSP(IntakeConstants.ARM_PWM);
     // roller = new DigitalOutput(IntakeConstants.ROLLER_CHANNEL);
-    roller = new PWMVictorSPX(IntakeConstants.ROLLER_CHANNEL);
+    roller = new PWMVictorSPX(IntakeConstants.INTAKE_PWM);
     // agitator = new Talon(IntakeConstants.AGITATOR_CHANNEL);
     // feeder = new DigitalOutput(IntakeConstants.FEEDER_CHANNEL);
     // bottomSwitch = new DigitalInput(IntakeConstants.BOTTOM_CHANNEL);
@@ -51,10 +51,10 @@ public class Intake extends SubsystemBase {
   }
   public void move(double speed) {
     System.out.println("speen");
-    window.set(speed);
+    arm.set(speed);
   }
-  public void stopWindow() {
-    window.stopMotor();
+  public void stopArm() {
+    arm.stopMotor();
   }
   public void in(double speed) {
     roller.setSpeed(speed);

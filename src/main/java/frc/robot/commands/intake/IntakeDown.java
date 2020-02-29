@@ -29,18 +29,18 @@ public class IntakeDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.in(-1.0);
-    intake.agitate(-1.0);
-    // intake.move(0.5);
-    System.out.println("EXECUTING COMMAND");
+    // intake.in(-1.0);
+    // intake.agitate(-1.0);
+    intake.move(0.5);
+    // System.out.println("EXECUTING COMMAND");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopWindow();
-    intake.stopRoller();
-    intake.stopAgitate();
+    intake.stopArm();
+    // intake.stopRoller();
+    // intake.stopAgitate();
   }
 
   // Returns true when the command should end.

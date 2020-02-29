@@ -41,12 +41,12 @@ public class ControlPanelArm extends SubsystemBase {
     cm.addColorMatch(ControlPanelArmConstants.GREEN);
     cm.addColorMatch(ControlPanelArmConstants.RED);
     cm.addColorMatch(ControlPanelArmConstants.YELLOW); 
-    spin = new DigitalOutput(ControlPanelArmConstants.SPIN_CHANNEL);
-    spacer = new DigitalInput(ControlPanelArmConstants.SPACER_CHANNEL);
+    spin = new DigitalOutput(ControlPanelArmConstants.SPIN_DIO);
+    spacer = new DigitalInput(ControlPanelArmConstants.LIMITSWITCH_DIO);
     spacerCheck = false;
     spin.enablePWM(0.375);
     spin.setPWMRate(250);
-    extender = new DoubleSolenoid(ControlPanelArmConstants.ARM_SOLENOID_FORWARD_CHANNEL, ControlPanelArmConstants.ARM_SOLENOID_REVERSE_CHANNEL);
+    extender = new DoubleSolenoid(ControlPanelArmConstants.ARM_SOLENOID_FORWARD_PCM, ControlPanelArmConstants.ARM_SOLENOID_REVERSE_PCM);
   }
 
   /**

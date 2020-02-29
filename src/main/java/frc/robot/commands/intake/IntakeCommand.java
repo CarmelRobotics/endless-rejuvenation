@@ -5,20 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.turret;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Intake;
 
-public class Fire extends CommandBase {
+public class IntakeCommand extends CommandBase {
   /**
-   * Creates a new fire.
+   * Creates a new IntakeDown.
    */
-  private Turret t;
-  public Fire(Turret t) {
+  Intake intake;
+  public IntakeCommand(Intake i) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.t = t;
-    addRequirements(t);
+    addRequirements(i);
+    intake = i;
   }
 
   // Called when the command is initially scheduled.
@@ -29,13 +29,18 @@ public class Fire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    t.shoot();
+    intake.in(-1.0);
+    intake.agitate(-1.0);
+    // intake.move(0.5);
+    // System.out.println("EXECUTING COMMAND");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    t.stop();
+    // intake.stopWindow();
+    intake.stopRoller();
+    intake.stopAgitate();
   }
 
   // Returns true when the command should end.
