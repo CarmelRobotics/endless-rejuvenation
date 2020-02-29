@@ -5,18 +5,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogInput;
 public class Vision extends SubsystemBase {
     static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     static NetworkTableEntry tv = table.getEntry("tv");
     static NetworkTableEntry tx = table.getEntry("tx");
     static NetworkTableEntry ty = table.getEntry("ty");
     static NetworkTableEntry ta = table.getEntry("ta");
-
+    AnalogInput sonar = new AnalogInput(3);
     public Vision() {
 
-    }
-    public double getDistanceEstimation(double angleOfCamera, double heightOfCamera) {
-        return (98.25-heightOfCamera)/Math.tan(angleOfCamera+getTY());
+    } 
+    public double getDistanceEstimation() {
+        return sonar.getValue()/13.888888;
     }
     //returns a value for the motor to run at in order to pivot to the target.
     public double pivotToTarget(double topSpeed, double slowSpeed, double threshold) {

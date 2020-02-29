@@ -18,19 +18,19 @@ import frc.robot.commands.shooter.Fire;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class Auto extends SequentialCommandGroup {
+public class Auto2 extends SequentialCommandGroup {
   /**
    * Creates a new Auto.
    */
-  public Auto(DriveTrain d, Intake i, Turret t, Vision v) {
+  public Auto2(DriveTrain d, Intake i, Turret t, Vision v) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    addCommands(
-              new AutoMove(d, 13),
-              new AutoTurn(d, -90, 1, 0.5),
-              new AutoMove(d, 18),
-              new AutoTurn(d, -90, 1, 0.5),
-              new PivotCommand(v, d),
-              new Fire(i,t,v));
-    }
+    
+    addCommands(new AutoMove(d, 13),
+                new AutoTurn(d, -90, 1, 0.5),
+                new AutoMove(d, 6.5),
+                new AutoTurn(d, -90, 1, 0.5),
+                new PivotCommand(v, d),
+                new Fire(i,t,v));
+  }
 }

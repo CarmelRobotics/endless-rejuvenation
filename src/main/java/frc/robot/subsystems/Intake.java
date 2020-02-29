@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
   private SpeedController window;
   // private DigitalOutput roller;
   private VictorSP agitator = new VictorSP(IntakeConstants.AGITATOR_CHANNEL);
-  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.LIMIT_SWITCH);
+  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.LIMIT_SWITCH_TOP_DIO);
   // private DigitalOutput feeder;
   // private DigitalInput bottomSwitch;
   // private DigitalInput topSwitch;
@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   public Intake() {
-    window = new VictorSP(IntakeConstants.WINDOW_CHANNEL);
+    window = new VictorSP(IntakeConstants.INTAKE_ARM_UPDOWN_PWM);
     // roller = new DigitalOutput(IntakeConstants.ROLLER_CHANNEL);
     roller = new PWMVictorSPX(IntakeConstants.ROLLER_CHANNEL);
     // agitator = new Talon(IntakeConstants.AGITATOR_CHANNEL);
