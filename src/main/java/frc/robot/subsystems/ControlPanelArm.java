@@ -37,7 +37,7 @@ public class ControlPanelArm extends SubsystemBase {
     cm.addColorMatch(ControlPanelArmConstants.GREEN);
     cm.addColorMatch(ControlPanelArmConstants.RED);
     cm.addColorMatch(ControlPanelArmConstants.YELLOW); 
-    spin = new DigitalOutput(4);
+    spin = new DigitalOutput(ControlPanelArmConstants.SPINNER_DIO);
     spin.enablePWM(0.375);
     spin.setPWMRate(250);
     extender = new DoubleSolenoid(ControlPanelArmConstants.ARM_SOLENOID_FORWARD_CHANNEL, ControlPanelArmConstants.ARM_SOLENOID_REVERSE_CHANNEL);

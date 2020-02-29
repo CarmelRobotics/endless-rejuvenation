@@ -38,8 +38,10 @@ public class RobotContainer {
   private final ControlPanelArm cpa = new ControlPanelArm();
    private final Turret turret = new Turret();
   private final Intake intake = new Intake();
+  private final Vision vision = new Vision();
   //Joysticks
   private final Joystick stick_right = Constants.ContainerConstants.JOYSTICK;
+  private final Joystick guitar = Constants.ContainerConstants.GUITAR;
   private final JoystickButton b_armExtend;
   private final JoystickButton b_armRetract;
   private final JoystickButton b_rotControl;
@@ -55,12 +57,12 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    b_Intake = new JoystickButton(stick_right, IntakeConstants.INTAKE_DOWN_BUTTON);
-    b_intakeUp = new JoystickButton(stick_right, IntakeConstants.INTAKE_UP);
-    b_armExtend = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_FWD_BUTTON);
-    b_armRetract = new JoystickButton(stick_right, ControlPanelArmConstants.ARM_REVERSE_BUTTON);
-    b_rotControl = new JoystickButton(stick_right, ControlPanelArmConstants.ROT_CONTROL_BUTTON);
-    b_colorControl = new JoystickButton(stick_right, ControlPanelArmConstants.POS_CONTROL_BUTTON);
+    b_Intake = new JoystickButton(guitar, IntakeConstants.INTAKE_DOWN_BUTTON_GUITAR);
+    b_intakeUp = new JoystickButton(guitar, IntakeConstants.INTAKE_UP_BUTTON_GUITAR);
+    b_armExtend = new JoystickButton(guitar, ControlPanelArmConstants.ARM_UP_BUTTON_GUITAR);
+    b_armRetract = new JoystickButton(guitar, ControlPanelArmConstants.ARM_DOWN_BUTTON_GUITAR);
+    b_rotControl = new JoystickButton(guitar, ControlPanelArmConstants.ROT_CONTROL_BUTTON_GUITAR);
+    b_colorControl = new JoystickButton(guitar, ControlPanelArmConstants.POS_CONTROL_BUTTON_GUITAR);
     b_turretOnOff = new JoystickButton(stick_right, 1);
     b_getEncoderVal = new JoystickButton(stick_right, TurretConstants.TURRETGETPWM);
     b_turretRotateUp = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_UP_BUTTON);
@@ -96,7 +98,7 @@ public class RobotContainer {
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
     b_intakeUp.whenHeld(new IntakeUp(intake));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
-    b_turretOnOff.whileHeld(new Fire(turret));
+    b_turretOnOff.whileHeld(new Fire(turret,vision));
     // b_turretRotateUp.whileHeld(new Rotate_Up(turret));
     // b_turretRotateDown.whileHeld(new Rotate_Down(turret));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
