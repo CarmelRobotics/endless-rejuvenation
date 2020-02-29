@@ -75,7 +75,7 @@ public final class Constants {
     public static final class ControlPanelArmConstants {
         /* DIO */
         public static final int CONTROL_PANEL_SWITCH_DIO = 7;
-        public static final int SPINNER_DIO = 4;
+        public static final int SPINNER_PWM = 7;
 
         /* Colors as read by the sensor in the lighting conditions of the shop */
         public static final Color BLUE = new Color(0.2,0.5,0.3);
