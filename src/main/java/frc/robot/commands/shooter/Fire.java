@@ -10,14 +10,19 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 public class Fire extends CommandBase {
   Intake intake;
   Turret turret;
-  public Fire(Intake i, Turret t) {
+  double ballVel = 0;
+  private Vision vision;
+
+  public Fire(Intake i, Turret t, Vision v) {
     addRequirements(i, t);
     intake = i;
     turret = t;
+    vision = v;
   }
 
   // Called when the command is initially scheduled.
@@ -28,6 +33,7 @@ public class Fire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double angleToTurnTo = turret.getAngleToTurnTo(ballVel, vision.getDistanceEstimation()/12, 32.2);
     turret.shoot();
     intake.agitate(0.5);
     intake.feed(0.5);

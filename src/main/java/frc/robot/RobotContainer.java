@@ -22,8 +22,10 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.controlpanelarm.*;
+import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.IntakeDown;
 import frc.robot.commands.intake.IntakeUp;
+import frc.robot.commands.shooter.Fire;
 import frc.robot.commands.turret.*;
 
 /**
@@ -34,7 +36,7 @@ import frc.robot.commands.turret.*;
  */
 public class RobotContainer {
   //Subsystems
-  //  private final DriveTrain drive = new DriveTrain();
+   private final DriveTrain drive = new DriveTrain();
   private final ControlPanelArm cpa = new ControlPanelArm();
    private final Turret turret = new Turret();
   private final Intake intake = new Intake();
@@ -47,6 +49,7 @@ public class RobotContainer {
   private final JoystickButton b_rotControl;
   private final JoystickButton b_Intake;
   private final JoystickButton b_intakeUp;
+  private final JoystickButton b_intakeDown;
   private final JoystickButton b_turretOnOff;
   private final JoystickButton b_colorControl;
   private final JoystickButton b_getEncoderVal;
@@ -57,7 +60,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    b_Intake = new JoystickButton(guitar, IntakeConstants.INTAKE_DOWN_BUTTON_GUITAR);
+    b_Intake = new JoystickButton(guitar, IntakeConstants.INTAKE_BUTTON_GUITAR);
+    b_intakeDown = new JoystickButton(guitar, IntakeConstants.INTAKE_DOWN_BUTTON_GUITAR);
     b_intakeUp = new JoystickButton(guitar, IntakeConstants.INTAKE_UP_BUTTON_GUITAR);
     b_armExtend = new JoystickButton(guitar, ControlPanelArmConstants.ARM_UP_BUTTON_GUITAR);
     b_armRetract = new JoystickButton(guitar, ControlPanelArmConstants.ARM_DOWN_BUTTON_GUITAR);
@@ -75,13 +79,13 @@ public class RobotContainer {
         -stick_right.getY()) 
       ,drive));
     */
-    /*drive.setDefaultCommand(new RunCommand(() -> 
+    drive.setDefaultCommand(new RunCommand(() -> 
       drive.arcadeDrive(
         stick_right.getY(), 
         stick_right.getX())
         ,drive
         ));
-    */
+    
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -94,11 +98,12 @@ public class RobotContainer {
     
     b_armExtend.whenPressed(new ArmExtend(cpa));
     b_armRetract.whenPressed(new ArmRetract(cpa));
-    b_Intake.whileHeld(new IntakeDown(intake));
+    b_Intake.whileHeld(new IntakeCommand(intake));
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
     b_intakeUp.whenHeld(new IntakeUp(intake));
+    b_intakeDown.whenHeld(new IntakeDown(intake));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
-    b_turretOnOff.whileHeld(new Fire(turret,vision));
+    b_turretOnOff.whileHeld(new Fire(intake,turret,vision));
     // b_turretRotateUp.whileHeld(new Rotate_Up(turret));
     // b_turretRotateDown.whileHeld(new Rotate_Down(turret));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
