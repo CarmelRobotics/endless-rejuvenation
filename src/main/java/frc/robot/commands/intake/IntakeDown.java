@@ -38,7 +38,7 @@ public class IntakeDown extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopWindow();
+    intake.stopArm();
     // intake.stopRoller();
     // intake.stopAgitate();
   }

@@ -32,6 +32,7 @@ public final class Constants {
         
         public static final Joystick JOYSTICK = new Joystick(JOYSTICK_USB);
         public static final Joystick GUITAR = new Joystick(GUITAR_USB);
+
     }
     
     /**
@@ -39,22 +40,23 @@ public final class Constants {
      * 
      */
     public static final class DriveConstants {
-        public static final int DRIVE_PWM_RIGHT_BACK = 0;
-        public static final int DRIVE_PWM_RIGHT_FRONT = 1;
-        public static final int DRIVE_PWM_LEFT_BACK = 2;
-        public static final int DRIVE_PWM_LEFT_FRONT = 3;
+        public static final int DRIVE_PWM_LEFT_BACK = 0;
+        public static final int DRIVE_PWM_LEFT_FRONT = 1;
+        public static final int DRIVE_PWM_RIGHT_BACK = 2;
+        public static final int DRIVE_PWM_RIGHT_FRONT = 3;
     }
     public static final class TurretConstants {
         public static final int TURRET_PWM_LEFT = 4;
         public static final int TURRET_PWM_RIGHT = 5;
-        public static final int SHOOTER_CAN_LEFT = 1;
-        public static final int SHOOTER_CAN_RIGHT = 2;
-        public static final int TURRET_ROTATE_UP_BUTTON = 7;
-        public static final int TURRET_ROTATE_DOWN_BUTTON = 9;
+        public static final int SHOOTER_CAN_LEFT = 2;
+        public static final int SHOOTER_CAN_RIGHT = 1;
         // public static final int SUSAN_PWM = 6;
         public static final int TURRETGETPWM = 8;
-        public static final int TURRET_UP_PWM_MOTOR = 9;
-        public static final int HOPPER2SHOOTER_PWM_MOTOR = 8;
+        public static final int WINDOW_PWM = 9;
+        public static final int ELEVATOR_PWM = 8;
+
+        public static final int TURRET_ROTATE_UP_BUTTON = 7;
+        public static final int TURRET_ROTATE_DOWN_BUTTON = 9;
     }
     public static final class EncoderConstants {
         // public static final int ENCODER_1_DIO1 = 2;
@@ -66,9 +68,6 @@ public final class Constants {
     }
     
     public static final class ControlPanelArmConstants {
-        /* DIO */
-        public static final int CONTROL_PANEL_SWITCH_DIO = 7;
-        public static final int SPINNER_DIO = 4;
 
         /* Colors as read by the sensor in the lighting conditions of the shop */
         public static final Color BLUE = new Color(0.2,0.5,0.3);
@@ -88,30 +87,38 @@ public final class Constants {
         /* i2C port */
         public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
 
+        /* DIO */
+        public static final int SPIN_DIO = 4;
+        public static final int LIMITSWITCH_DIO = 5;
         /* PCM ports */
-        public static final int ARM_SOLENOID_FORWARD_CHANNEL = 0;
-        public static final int ARM_SOLENOID_REVERSE_CHANNEL = 1;
-        /*Button Mapping*/   
-        public static final int ARM_UP_BUTTON_GUITAR = 2;
-        public static final int ARM_DOWN_BUTTON_GUITAR = 3;
-        public static final int ROT_CONTROL_BUTTON_GUITAR = 4;
-        public static final int POS_CONTROL_BUTTON_GUITAR = 5;
+        public static final int ARM_SOLENOID_FORWARD_PCM = 0;
+        public static final int ARM_SOLENOID_REVERSE_PCM = 1;
+        /*Button Mapping*/
+        public static final int ARM_FWD_BUTTON = 5;
+        public static final int ARM_REVERSE_BUTTON = 3;
+        public static final int ROT_CONTROL_BUTTON = 10;
+        public static final int POS_CONTROL_BUTTON = 9;
+		public static final int ARM_UP_BUTTON_GUITAR = 2;
+		public static final int ARM_DOWN_BUTTON_GUITAR = 3;
+		public static final int ROT_CONTROL_BUTTON_GUITAR = 4;
+		public static final int POS_CONTROL_BUTTON_GUITAR = 5;
     }
 
     public static final class IntakeConstants {
 
-        public static final int ROLLER_CHANNEL = 6; 
-        public static final int INTAKE_ARM_UPDOWN_PWM = 5;
-        public static final int AGITATOR_CHANNEL = 4;
-        public static final int FEEDER_CHANNEL = 00;
+        public static final int INTAKE_PWM = 6;
+        public static final int ARM_PWM = 5;
+        public static final int AGITATOR_PWM = 4;
+        public static final int FEEDER_PWM = 8;
 
-        // public static final int BOTTOM_CHANNEL = 00;
-        // public static final int TOP_CHANNEL = 00;
-        public static final int LIMIT_SWITCH_TOP_DIO = 9;
-        public static final int LIMIT_SWITCH_BOTTOM_DIO = 8;
-        public static final int INTAKE_UP_BUTTON_GUITAR = 9;
-        public static final int INTAKE_DOWN_BUTTON_GUITAR = 8;
-        public static final int INTAKE_BUTTON_GUITAR = 1;
+        public static final int TOP_LIMITSWITCH = 9;
+        public static final int BOTTOM_LIMITSWITCH = 8;
+
+        public static final int INTAKE_UP_BUTTON = 11;
+        public static final int INTAKE_DOWN_BUTTON = 12;
+		public static final int INTAKE_BUTTON_GUITAR = 1;
+		public static final int INTAKE_DOWN_BUTTON_GUITAR = 8;
+		public static final int INTAKE_UP_BUTTON_GUITAR = 9;
     }
     
     public static final class HangerConstants {

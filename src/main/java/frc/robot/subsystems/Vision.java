@@ -12,6 +12,11 @@ public class Vision extends SubsystemBase {
     static NetworkTableEntry tx = table.getEntry("tx");
     static NetworkTableEntry ty = table.getEntry("ty");
     static NetworkTableEntry ta = table.getEntry("ta");
+    private static double vTurret = 1;
+    private static double targetHeight = 9.4375;
+    private static double turretHeight = 00;
+    private static double gravity = 32.2;
+
     AnalogInput sonar = new AnalogInput(3);
     public Vision() {
 
@@ -19,6 +24,8 @@ public class Vision extends SubsystemBase {
     public double getDistanceEstimation() {
         return sonar.getValue()/13.888888;
     }
+    
+    
     //returns a value for the motor to run at in order to pivot to the target.
     public double pivotToTarget(double topSpeed, double slowSpeed, double threshold) {
         if (getTX() != 0.0) {

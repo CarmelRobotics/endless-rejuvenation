@@ -36,9 +36,9 @@ import frc.robot.commands.turret.*;
  */
 public class RobotContainer {
   //Subsystems
-   private final DriveTrain drive = new DriveTrain();
+  private final DriveTrain drive = new DriveTrain();
   private final ControlPanelArm cpa = new ControlPanelArm();
-   private final Turret turret = new Turret();
+  private final Turret turret = new Turret();
   private final Intake intake = new Intake();
   private final Vision vision = new Vision();
   //Joysticks
@@ -67,6 +67,7 @@ public class RobotContainer {
     b_armRetract = new JoystickButton(guitar, ControlPanelArmConstants.ARM_DOWN_BUTTON_GUITAR);
     b_rotControl = new JoystickButton(guitar, ControlPanelArmConstants.ROT_CONTROL_BUTTON_GUITAR);
     b_colorControl = new JoystickButton(guitar, ControlPanelArmConstants.POS_CONTROL_BUTTON_GUITAR);
+
     b_turretOnOff = new JoystickButton(stick_right, 1);
     b_getEncoderVal = new JoystickButton(stick_right, TurretConstants.TURRETGETPWM);
     b_turretRotateUp = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_UP_BUTTON);
@@ -77,7 +78,7 @@ public class RobotContainer {
       drive.tankDrive(
         -stick_left.getY(), 
         -stick_right.getY()) 
-      ,drive));
+      ,drive));/
     */
     drive.setDefaultCommand(new RunCommand(() -> 
       drive.arcadeDrive(
@@ -98,10 +99,9 @@ public class RobotContainer {
     
     b_armExtend.whenPressed(new ArmExtend(cpa));
     b_armRetract.whenPressed(new ArmRetract(cpa));
-    b_Intake.whileHeld(new IntakeCommand(intake));
+    b_Intake.whileHeld(new IntakeDown(intake));
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
     b_intakeUp.whenHeld(new IntakeUp(intake));
-    b_intakeDown.whenHeld(new IntakeDown(intake));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
     b_turretOnOff.whileHeld(new Fire(intake,turret,vision));
     // b_turretRotateUp.whileHeld(new Rotate_Up(turret));
