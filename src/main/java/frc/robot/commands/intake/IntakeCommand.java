@@ -14,11 +14,13 @@ public class IntakeCommand extends CommandBase {
   /**
    * Creates a new IntakeDown.
    */
+  double speed;
   Intake intake;
-  public IntakeCommand(Intake i) {
+  public IntakeCommand(Intake i, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(i);
     intake = i;
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +31,8 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.in(-1.0);
-    intake.agitate(-1.0);
+    intake.in(speed);
+    intake.agitate(speed);
     // intake.move(0.5);
     // System.out.println("EXECUTING COMMAND");
   }

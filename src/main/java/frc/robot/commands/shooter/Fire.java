@@ -29,24 +29,57 @@ public class Fire extends CommandBase {
   @Override
   public void initialize() {
   }
+  boolean turnToAngle(double angle, double error) {
+    double angleAt = Math.abs(turret.getNAVXAngle());
+    // double angleDiff = Math.abs(turret.getNAVXAngle())-angle;
+    double diff = Math.abs(angleAt-angle);
+    // double maxSpeed = angle/100;
+    double speed = 0.5;
 
+    if (diff < error + 10) {
+      speed = 0.2;
+    }
+    if (diff < error) {
+      turret.rotateStop();
+      return true;
+    }
+
+    if (angleAt < angle) {
+      // turret.rotate(speed-((diff)/300));
+      turret.rotate(speed);
+      return false;
+    } else if (angleAt > angle) {
+      // turret.rotate(-(speed)-(diff/200));
+      turret.rotate(-speed);
+      return false;
+    } else {
+      turret.rotateStop();
+      return true;
+    }
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double angleToTurnTo = turret.getAngleToTurnTo(ballVel, vision.getDistanceEstimation()/12, 32.2);
-    turret.shoot();
-    intake.agitate(0.5);
-    intake.feed(0.5);
+    System.out.println("NAVX VALUE: " + Math.abs(turret.getNAVXAngle()));
+    // turret.shoot();
+    // intake.agitate(-0.5);
+    if (turnToAngle(45, 0.25)) {
+      turret.rotateStop();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    turret.stop();
+    intake.stopAgitate();
+    turret.rotateStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.ballsLoaded == 0;
+    return (Math.abs(turret.getNAVXAngle()) > 50);
   }
 }

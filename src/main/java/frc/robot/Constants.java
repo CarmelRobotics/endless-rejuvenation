@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Color;
@@ -26,6 +27,10 @@ public final class Constants {
      * Constants for the Control System of the Robot
      * 
      */
+    public static final class ThreeWaySwitchConstants {
+        public static final DigitalInput SWITCH_1 = new DigitalInput(2);
+        public static final DigitalInput SWITCH_3 = new DigitalInput(3);
+    }
     public static final class ContainerConstants{
         public static final int JOYSTICK_USB = 0;
         public static final int GUITAR_USB = 1;
@@ -53,7 +58,7 @@ public final class Constants {
         // public static final int SUSAN_PWM = 6;
         public static final int TURRETGETPWM = 8;
         public static final int WINDOW_PWM = 9;
-        public static final int ELEVATOR_PWM = 8;
+        public static final int HOPPER2TURRET_PWM = 8;
 
         public static final int TURRET_ROTATE_UP_BUTTON = 7;
         public static final int TURRET_ROTATE_DOWN_BUTTON = 9;

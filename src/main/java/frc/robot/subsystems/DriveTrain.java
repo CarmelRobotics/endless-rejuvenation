@@ -59,7 +59,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double input_y, double input_x){
-    drive.arcadeDrive(input_y, input_x);
+    drive.arcadeDrive(-input_y, input_x);
   }
 
   // public double getEncLeftDistance() {

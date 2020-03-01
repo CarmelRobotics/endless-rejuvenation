@@ -35,14 +35,14 @@ public class Turret extends SubsystemBase {
   private CANSparkMax shooterR;
   private SpeedController turretAngleL, turretAngleR, susan;
   private SpeedControllerGroup shooter;
-  private DigitalOutput turret;
+  // private DigitalOutput turret;
   private DigitalOutput turretWheel1;
   private DigitalOutput turretWheel2;
   private PWMSparkMax Shooter1;
   private PWMSparkMax Shooter2;
   private PWMVictorSPX elevator;
   private VictorSP windowMotor;
-  
+
   AnalogEncoder encoder = new AnalogEncoder(new AnalogInput(EncoderConstants.SHOOTER_ENCODER_3_PORT));
   public Turret() {
     shooterL = new CANSparkMax(TurretConstants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
@@ -50,7 +50,7 @@ public class Turret extends SubsystemBase {
     windowMotor = new VictorSP(TurretConstants.WINDOW_PWM);
     //encoder.reset();
      
-    turret = new DigitalOutput(5);
+    // turret = new DigitalOutput(5);
 
    // Shooter1 = new PWMSparkMax(9);
     //Shooter2 = new PWMSparkMax(8);
@@ -62,8 +62,12 @@ public class Turret extends SubsystemBase {
     //turretWheel1.setPWMRate(200);
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
-   // elevator = new PWMVictorSPX(TurretConstants.ELEVATOR_PWM_MOTOR);
+    elevator = new PWMVictorSPX(TurretConstants.HOPPER2TURRET_PWM);
     navx.reset();
+    rotateStop();
+  }
+  public double getNAVXAngle() {
+    return navx.getAngle();
   }
   public double getAngleToTurnTo(double ballVel,double targetDist, double gravity) {
     //ft per second
@@ -77,27 +81,26 @@ public class Turret extends SubsystemBase {
       return (Math.atan(ballVel+value1))/(gravity*targetDist);
     }
   }
+
   public void shoot(){
     // shooter.set(1);
+    elevator.set(-1);
     if (shooterL == null) {
        System.out.println("LEFT SHOOTER IS NULL");
      }else {
-       shooterL.set(0.75);
-       shooterR.set(-0.75);
+       shooterL.set(-1);
+       shooterR.set(1);
      }
 
   }
 
-  public void rotateUp(){
+  public void rotate(double speed){
 
-    windowMotor.setSpeed(-0.25);
+    windowMotor.setSpeed(-speed);
 
   }
 
-  public void rotateDown(){
-
-    windowMotor.setSpeed(0.25);
-  }
+  
 
   public void rotateStop(){
 
@@ -111,11 +114,12 @@ public class Turret extends SubsystemBase {
        shooterL.set(0);
        shooterR.set(0);  
      }
+     elevator.stopMotor();
   }
 
   public double getEncoderValue() {
-    System.out.println("ENCODERVALUE: " + encoder.get());
-    SmartDashboard.putNumber("ENCODER VALUE", encoder.get());
+    // System.out.println("ENCODERVALUE: " + encoder.get());
+    // SmartDashboard.putNumber("ENCODER VALUE", encoder.get());
     return navx.getAngle();
   }
   
@@ -138,19 +142,19 @@ public class Turret extends SubsystemBase {
   public void resetTurret() {
     encoder.reset();
   }
-  public void moveAtSpeed(double speed) {
-    turret.updateDutyCycle((speed*0.5+1.5)/4);
-  }
-  public void stopMovingTurret() {
-    turret.updateDutyCycle(0.0);
-  }
- public int angle() {
-   turret.updateDutyCycle((0.25*0.5+1.5)/4);
-   return 0;
- }
+//   public void moveAtSpeed(double speed) {
+//     turret.updateDutyCycle((speed*0.5+1.5)/4);
+//   }
+//   public void stopMovingTurret() {
+//     turret.updateDutyCycle(0.0);
+//   }
+//  public int angle() {
+//    turret.updateDutyCycle((0.25*0.5+1.5)/4);
+//    return 0;
+//  }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ENCODER VALUE", getEncoderValue());
+    // SmartDashboard.putNumber("ENCODER VALUE", getEncoderValue());
     // This method will be called once per scheduler run
   }
 }
