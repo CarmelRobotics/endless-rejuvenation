@@ -52,7 +52,7 @@ public class Turret extends SubsystemBase {
      
     turret = new DigitalOutput(5);
 
-   // Shooter1 = new PWMSparkMax(9);
+    //Shooter1 = new PWMSparkMax(9);
     //Shooter2 = new PWMSparkMax(8);
     //Shooter1.setInverted(true);
 
@@ -62,7 +62,7 @@ public class Turret extends SubsystemBase {
     //turretWheel1.setPWMRate(200);
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
-   // elevator = new PWMVictorSPX(TurretConstants.ELEVATOR_PWM_MOTOR);
+    //elevator = new PWMVictorSPX(TurretConstants.ELEVATOR_PWM_MOTOR);
     navx.reset();
   }
   public double getAngleToTurnTo(double ballVel,double targetDist, double gravity) {

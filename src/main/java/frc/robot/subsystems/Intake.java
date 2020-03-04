@@ -22,28 +22,21 @@ public class Intake extends SubsystemBase {
   private SpeedController arm;
   // private DigitalOutput roller;
   private VictorSP agitator = new VictorSP(IntakeConstants.AGITATOR_PWM);
-  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.TOP_LIMITSWITCH);
+  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.TOP_LIMITSWITCH_DIO);
   // private DigitalOutput feeder;
   // private DigitalInput bottomSwitch;
   // private DigitalInput topSwitch;
-  public int ballsLoaded;
   public PWMVictorSPX roller;
   /**
    * Creates a new Intake.
    */
   public Intake() {
     arm = new VictorSP(IntakeConstants.ARM_PWM);
-    // roller = new DigitalOutput(IntakeConstants.ROLLER_CHANNEL);
     roller = new PWMVictorSPX(IntakeConstants.INTAKE_PWM);
-    // agitator = new Talon(IntakeConstants.AGITATOR_CHANNEL);
-    // feeder = new DigitalOutput(IntakeConstants.FEEDER_CHANNEL);
-    // bottomSwitch = new DigitalInput(IntakeConstants.BOTTOM_CHANNEL);
-    // topSwitch = new DigitalInput(IntakeConstants.TOP_CHANNEL);
     // roller.enablePWM(0.375);
     // roller.setPWMRate(250);
     // feeder.enablePWM(0.375);
     // feeder.setPWMRate(250);
-    ballsLoaded = 3;
     roller.setInverted(true);
   }
   public boolean getLimitSwitch() {

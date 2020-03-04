@@ -81,9 +81,6 @@ public final class Constants {
         public static final Color IDEAL_RED = new Color(1, 0, 0);
         public static final Color IDEAL_YELLOW = new Color(1, 1, 0);
 
-        /* ARM PWMS */
-        public static final int ARM_MOTOR_CAN = 1;
-
         /* i2C port */
         public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
 
@@ -111,8 +108,8 @@ public final class Constants {
         public static final int AGITATOR_PWM = 4;
         public static final int FEEDER_PWM = 8;
 
-        public static final int TOP_LIMITSWITCH = 9;
-        public static final int BOTTOM_LIMITSWITCH = 8;
+        public static final int TOP_LIMITSWITCH_DIO = 9;
+        public static final int BOTTOM_LIMITSWITCH_DIO = 8;
 
         public static final int INTAKE_UP_BUTTON = 11;
         public static final int INTAKE_DOWN_BUTTON = 12;
