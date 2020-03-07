@@ -52,7 +52,7 @@ public class Turret extends SubsystemBase {
      
     // turret = new DigitalOutput(5);
 
-   // Shooter1 = new PWMSparkMax(9);
+    //Shooter1 = new PWMSparkMax(9);
     //Shooter2 = new PWMSparkMax(8);
     //Shooter1.setInverted(true);
 
