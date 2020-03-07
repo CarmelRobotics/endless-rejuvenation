@@ -21,6 +21,7 @@ import frc.robot.Constants.ControlPanelArmConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.*;
 import frc.robot.commands.controlpanelarm.*;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.IntakeDown;
@@ -48,6 +49,7 @@ public class RobotContainer {
   private final JoystickButton b_armRetract;
   private final JoystickButton b_rotControl;
   private final JoystickButton b_Intake;
+  private final JoystickButton b_IntakeOut;
   private final JoystickButton b_intakeUp;
   private final JoystickButton b_intakeDown;
   private final JoystickButton b_turretOnOff;
@@ -55,19 +57,21 @@ public class RobotContainer {
   private final JoystickButton b_getEncoderVal;
   private final JoystickButton b_turretRotateUp;
   private final JoystickButton b_turretRotateDown;
+  private final JoystickButton b_allign;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     b_Intake = new JoystickButton(guitar, IntakeConstants.INTAKE_BUTTON_GUITAR);
+    b_IntakeOut = new JoystickButton(stick_right, 5);
     b_intakeDown = new JoystickButton(guitar, IntakeConstants.INTAKE_DOWN_BUTTON_GUITAR);
     b_intakeUp = new JoystickButton(guitar, IntakeConstants.INTAKE_UP_BUTTON_GUITAR);
     b_armExtend = new JoystickButton(guitar, ControlPanelArmConstants.ARM_UP_BUTTON_GUITAR);
     b_armRetract = new JoystickButton(guitar, ControlPanelArmConstants.ARM_DOWN_BUTTON_GUITAR);
     b_rotControl = new JoystickButton(guitar, ControlPanelArmConstants.ROT_CONTROL_BUTTON_GUITAR);
     b_colorControl = new JoystickButton(guitar, ControlPanelArmConstants.POS_CONTROL_BUTTON_GUITAR);
-
+    b_allign = new JoystickButton(stick_right, TurretConstants.ALLIGN_BUTTON);
     b_turretOnOff = new JoystickButton(stick_right, 1);
     b_getEncoderVal = new JoystickButton(stick_right, TurretConstants.TURRETGETPWM);
     b_turretRotateUp = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_UP_BUTTON);
@@ -96,14 +100,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    
+    b_IntakeOut.whenHeld(new IntakeCommand(intake,1.0));
     b_armExtend.whenPressed(new ArmExtend(cpa));
     b_armRetract.whenPressed(new ArmRetract(cpa));
-    b_Intake.whileHeld(new IntakeDown(intake));
+    b_Intake.whileHeld(new IntakeCommand(intake,-1.0));
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
-    b_intakeUp.whenHeld(new IntakeUp(intake));
+    b_intakeUp.whileHeld(new IntakeUp(intake));
+    b_intakeDown.whileHeld(new IntakeDown(intake));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
     b_turretOnOff.whileHeld(new Fire(intake,turret,vision));
+    b_allign.whileHeld(new PivotCommand(vision,drive, turret));
     // b_turretRotateUp.whileHeld(new Rotate_Up(turret));
     // b_turretRotateDown.whileHeld(new Rotate_Down(turret));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
@@ -124,6 +130,13 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    // if (Constants.ThreeWaySwitchConstants.SWITCH_1.get() == true) {
+    //   return new Auto1(drive,intake,turret,vision);
+    // }else if (Constants.ThreeWaySwitchConstants.SWITCH_3.get() == true) {
+    //   return new Auto3(drive,intake,turret,vision);
+    // }else {
+    //   return new Auto2(drive,intake,turret,vision);
+    // }
     return null;
   }
 }

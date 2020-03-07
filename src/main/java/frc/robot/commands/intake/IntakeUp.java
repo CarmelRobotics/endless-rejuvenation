@@ -29,7 +29,11 @@ public class IntakeUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.move(-0.8);
+    if (intake.getLimitSwitchTop() == true) {
+      intake.stopArm();
+    }else {
+      intake.move(-0.75);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +45,6 @@ public class IntakeUp extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.getLimitSwitch();
+    return false;
   }
 }

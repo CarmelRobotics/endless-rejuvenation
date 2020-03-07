@@ -7,20 +7,27 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
 public class PivotCommand extends CommandBase {
   Vision vision;
-  double P = 1.8;
-  double I = 0.0;
-  double D = 0.0;
+  private static double P = 1.8;
+  private static double I = 0.0;
+  private static double D = 0.0;
   double rcw = 0.0;
   DriveTrain d;
-  public PivotCommand(Vision v, DriveTrain d) {
+  Turret turret;
+  public PivotCommand(Vision v, DriveTrain d, Turret t) {
     this.vision = v;
     this.d = d;
+    this.turret = t;
+    turret.resetNAVX();
   }
   // private double convert(double percent) {
 
@@ -31,16 +38,49 @@ public class PivotCommand extends CommandBase {
   }
 
   void turnAtSpeed(double speed) {
-    d.tankDrive(-speed, speed);
+    d.tankDrive(speed, -speed);
+  }
+  boolean turnToAngle(double angle, double error) {
+    double angleAt = Math.abs(turret.getNAVXAngle());
+    // double angleDiff = Math.abs(turret.getNAVXAngle())-angle;
+    double diff = Math.abs(angleAt-angle);
+    // double maxSpeed = angle/100;
+    double speed = 0.45;
+
+    if (diff < error + 10) {
+      speed = 0.25;
+    }
+    if (diff < error) {
+      turret.rotateStop();
+      return true;
+    }
+
+    if (angleAt < angle) {
+      // turret.rotate(speed-((diff)/300));
+      turret.rotate(speed);
+      return false;
+    } else if (angleAt > angle) {
+      // turret.rotate(-(speed)-(diff/200));
+      turret.rotate(-speed);
+      return false;
+    } else {
+      turret.rotateStop();
+      return true;
+    }
   }
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    try {
-      turnAtSpeed(vision.pivotToTarget(0.5,0.3,0.1));
-    } catch (NullPointerException e) {
-      System.out.println("Caught Exception");
-    }
+    SmartDashboard.putNumber("TURRET ANGLE", turret.getNAVXAngle());
+    // System.out.println("Turret angle is " + turret.getNAVXAngle());
+    // try {
+    //   if (turnToAngle(45, 1) == true) {
+    //     turret.rotateStop();
+    //     // turnAtSpeed(vision.pivotToTarget(0.5,0.3,0.1));
+    //   }
+    // } catch (NullPointerException e) {
+    //   System.out.println("Caught Exception");
+    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -53,6 +93,7 @@ public class PivotCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
       System.out.print("");
+      turret.rotateStop();
   }
 
   // Called when another command which requires one or more of the same

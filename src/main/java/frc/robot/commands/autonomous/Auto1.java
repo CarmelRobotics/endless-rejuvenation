@@ -25,11 +25,11 @@ public class Auto1 extends SequentialCommandGroup {
   public Auto1(DriveTrain d, Intake i, Turret t, Vision v) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    addCommands(new AutoMove(d, 6),
+    addCommands(new AutoMove(d, 3),
               new AutoTurn(d, -90, 1, 0.5),
               new AutoMove(d, 18),
               new AutoTurn(d, -90, 1, 0.5),
-              new PivotCommand(v, d),
+              new PivotCommand(v, d, t),
               new Fire(i,t,v));
     }
 }

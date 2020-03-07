@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Color;
@@ -26,6 +27,10 @@ public final class Constants {
      * Constants for the Control System of the Robot
      * 
      */
+    public static final class ThreeWaySwitchConstants {
+        public static final DigitalInput SWITCH_1 = new DigitalInput(2);
+        public static final DigitalInput SWITCH_3 = new DigitalInput(3);
+    }
     public static final class ContainerConstants{
         public static final int JOYSTICK_USB = 0;
         public static final int GUITAR_USB = 1;
@@ -53,16 +58,16 @@ public final class Constants {
         // public static final int SUSAN_PWM = 6;
         public static final int TURRETGETPWM = 8;
         public static final int WINDOW_PWM = 9;
-        public static final int ELEVATOR_PWM = 8;
-
+        public static final int HOPPER2TURRET_PWM = 8;
+        public static final int ALLIGN_BUTTON = 2;
         public static final int TURRET_ROTATE_UP_BUTTON = 7;
         public static final int TURRET_ROTATE_DOWN_BUTTON = 9;
     }
     public static final class EncoderConstants {
-        // public static final int ENCODER_1_DIO1 = 2;
-        // public static final int ENCODER_1_DIO2 = 3;
-        // public static final int ENCODER_2_DIO1 = 0;
-        // public static final int ENCODER_2_DIO2 = 1;
+        public static final int ENCODER_1_DIO1 = 2;
+        public static final int ENCODER_1_DIO2 = 3;
+        public static final int ENCODER_2_DIO1 = 0;
+        public static final int ENCODER_2_DIO2 = 1;
         public static final int SHOOTER_ENCODER_3_PORT = 0;// analog input port 0
         public static final double DISTANCE_PER_PULSE = 0.5*Math.PI/1024.;
     }
@@ -91,8 +96,8 @@ public final class Constants {
         public static final int ARM_SOLENOID_FORWARD_PCM = 0;
         public static final int ARM_SOLENOID_REVERSE_PCM = 1;
         /*Button Mapping*/
-        public static final int ARM_FWD_BUTTON = 5;
-        public static final int ARM_REVERSE_BUTTON = 3;
+        // public static final int ARM_FWD_BUTTON = 5;
+        // public static final int ARM_REVERSE_BUTTON = 3;
         public static final int ROT_CONTROL_BUTTON = 10;
         public static final int POS_CONTROL_BUTTON = 9;
 		public static final int ARM_UP_BUTTON_GUITAR = 2;
@@ -104,15 +109,15 @@ public final class Constants {
     public static final class IntakeConstants {
 
         public static final int INTAKE_PWM = 6;
-        public static final int ARM_PWM = 5;
+        public static final int ARM_PWM = 7;
         public static final int AGITATOR_PWM = 4;
         public static final int FEEDER_PWM = 8;
 
         public static final int TOP_LIMITSWITCH_DIO = 9;
         public static final int BOTTOM_LIMITSWITCH_DIO = 8;
 
-        public static final int INTAKE_UP_BUTTON = 11;
-        public static final int INTAKE_DOWN_BUTTON = 12;
+        public static final int INTAKE_UP_BUTTON = 4;
+        public static final int INTAKE_DOWN_BUTTON = 3;
 		public static final int INTAKE_BUTTON_GUITAR = 1;
 		public static final int INTAKE_DOWN_BUTTON_GUITAR = 8;
 		public static final int INTAKE_UP_BUTTON_GUITAR = 9;

@@ -17,11 +17,15 @@ public class Vision extends SubsystemBase {
     private static double turretHeight = 00;
     private static double gravity = 32.2;
 
-    AnalogInput sonar = new AnalogInput(3);
+    AnalogInput sonar = new AnalogInput(2);
+    AnalogInput sonar2 = new AnalogInput(1);
     public Vision() {
 
     } 
     public double getDistanceEstimation() {
+        return sonar.getValue()/13.888888;
+    }
+    public double getDistanceEstimation2() {
         return sonar.getValue()/13.888888;
     }
     
