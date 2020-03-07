@@ -29,14 +29,14 @@ public class AutoMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // encDiff = drive.getEncLeftDistance() - drive.getEncRightDistance();
-    // if (encDiff > 0.004) { //at wheel dist = 22.5 in, assuming no skid, this allows 0.1 degree drift before correcting (two encoder steps)
-    //   drive.tankDrive(0.9, 1.0); //CALIBRATE
-    // } else if (encDiff < -0.004) {
-    //   drive.tankDrive(1.0, 0.9); //CALIBRATE
-    // } else {
-    //   drive.tankDrive(1.0, 1.0);
-    // }
+    encDiff = drive.getEncLeftDistance() - drive.getEncRightDistance();
+    if (encDiff > 0.004) { //at wheel dist = 22.5 in, assuming no skid, this allows 0.1 degree drift before correcting (two encoder steps)
+      drive.tankDrive(0.9, 1.0); //CALIBRATE
+    } else if (encDiff < -0.004) {
+      drive.tankDrive(1.0, 0.9); //CALIBRATE
+    } else {
+      drive.tankDrive(1.0, 1.0);
+    }
     
   }
   
@@ -44,14 +44,14 @@ public class AutoMove extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // drive.resetEncLeft();
-    // drive.resetEncRight();
+    drive.resetEncLeft();
+    drive.resetEncRight();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    // return (drive.getEncLeftDistance() > moveDistance && drive.getEncRightDistance() > moveDistance); //CALIBRATE
+    // return false;
+    return (drive.getEncLeftDistance() > moveDistance && drive.getEncRightDistance() > moveDistance); //CALIBRATE
   }
 }
