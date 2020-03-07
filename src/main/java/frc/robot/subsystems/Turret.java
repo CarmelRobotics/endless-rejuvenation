@@ -63,22 +63,32 @@ public class Turret extends SubsystemBase {
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
     elevator = new PWMVictorSPX(TurretConstants.HOPPER2TURRET_PWM);
-    navx.reset();
     rotateStop();
   }
   public double getNAVXAngle() {
     return navx.getAngle();
   }
-  public double getAngleToTurnTo(double ballVel,double targetDist, double gravity) {
+  public void resetNAVX() {
+    navx.reset();
+  }
+  public double getAngleToTurnTo(double ballVel,double targetDist) {
     //ft per second
+    double gravity = 32.2;
     double targetHeight = 98.25;
-    double turretHeight = 20;
+    double turretHeight = 19.25/12;
     double deltaY = targetHeight-turretHeight;
     double value1 = Math.sqrt(Math.pow(ballVel, 4)-gravity*(gravity*Math.pow(targetDist, 2)+2*deltaY*Math.pow(ballVel,2)));
-    if (ballVel > value1) {
-      return (Math.atan(ballVel-value1))/(gravity*targetDist);
+    double angle1 = (Math.atan(ballVel-value1))/(gravity*targetDist);
+    double angle2 = (Math.atan(ballVel+value1))/(gravity*targetDist);
+    // if (ballVel > value1) {
+    //   return (Math.atan(ballVel-value1))/(gravity*targetDist);
+    // }else {
+    //   return (Math.atan(ballVel+value1))/(gravity*targetDist);
+    // }
+    if (angle1>angle2) {
+      return angle2;
     }else {
-      return (Math.atan(ballVel+value1))/(gravity*targetDist);
+      return angle1;
     }
   }
 
@@ -100,7 +110,9 @@ public class Turret extends SubsystemBase {
 
   }
 
-  
+  double getEncoderValue() {
+    return encoder.get();
+  }
 
   public void rotateStop(){
 
@@ -117,7 +129,7 @@ public class Turret extends SubsystemBase {
      elevator.stopMotor();
   }
 
-  public double getEncoderValue() {
+  public double getNAVXValue() {
     // System.out.println("ENCODERVALUE: " + encoder.get());
     // SmartDashboard.putNumber("ENCODER VALUE", encoder.get());
     return navx.getAngle();
@@ -154,7 +166,7 @@ public class Turret extends SubsystemBase {
 //  }
   @Override
   public void periodic() {
-    // SmartDashboard.putNumber("ENCODER VALUE", getEncoderValue());
+    SmartDashboard.putNumber("ENCODER VALUE", getEncoderValue());
     // This method will be called once per scheduler run
   }
 }

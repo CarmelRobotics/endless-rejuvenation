@@ -36,9 +36,9 @@ public class Fire extends CommandBase {
     // double maxSpeed = angle/100;
     double speed = 0.5;
 
-    if (diff < error + 10) {
-      speed = 0.2;
-    }
+    // if (diff < error + 10) {
+    //   speed = 0.2;
+    // }
     if (diff < error) {
       turret.rotateStop();
       return true;
@@ -62,11 +62,11 @@ public class Fire extends CommandBase {
   public void execute() {
     double angleToTurnTo = turret.getAngleToTurnTo(ballVel, vision.getDistanceEstimation()/12, 32.2);
     System.out.println("NAVX VALUE: " + Math.abs(turret.getNAVXAngle()));
-    // turret.shoot();
-    // intake.agitate(-0.5);
-    if (turnToAngle(45, 0.25)) {
-      turret.rotateStop();
-    }
+    // if (turnToAngle(45, 1.0)) {
+    turret.rotateStop();
+    turret.shoot();
+    intake.agitate(-0.5);
+    
   }
 
   // Called once the command ends or is interrupted.

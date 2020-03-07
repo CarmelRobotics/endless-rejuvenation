@@ -12,6 +12,7 @@ import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -19,10 +20,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private SpeedController arm;
+  private VictorSP arm;
   // private DigitalOutput roller;
   private VictorSP agitator = new VictorSP(IntakeConstants.AGITATOR_PWM);
-  private DigitalInput limit_switch = new DigitalInput(IntakeConstants.TOP_LIMITSWITCH);
+  private DigitalInput limit_switch_top = new DigitalInput(IntakeConstants.TOP_LIMITSWITCH);
+  private DigitalInput limit_switch_bottom = new DigitalInput(IntakeConstants.BOTTOM_LIMITSWITCH);
   // private DigitalOutput feeder;
   // private DigitalInput bottomSwitch;
   // private DigitalInput topSwitch;
@@ -46,14 +48,18 @@ public class Intake extends SubsystemBase {
     ballsLoaded = 3;
     roller.setInverted(true);
   }
-  public boolean getLimitSwitch() {
-    return limit_switch.get();
+  public boolean getLimitSwitchTop() {
+    return limit_switch_top.get();
+  }
+  public boolean getLimitSwitchBottom() {
+    return limit_switch_bottom.get();
   }
   public void move(double speed) {
-    System.out.println("speen");
+    System.out.println("moving arm at " + speed);
     arm.set(speed);
   }
   public void stopArm() {
+    System.out.println("stopping arm");
     arm.stopMotor();
   }
   public void in(double speed) {

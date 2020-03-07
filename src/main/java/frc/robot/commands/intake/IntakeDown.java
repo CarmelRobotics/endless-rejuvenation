@@ -31,7 +31,11 @@ public class IntakeDown extends CommandBase {
   public void execute() {
     // intake.in(-1.0);
     // intake.agitate(-1.0);
-    intake.move(0.5);
+    if (intake.getLimitSwitchBottom() == false) {
+      intake.stopArm();
+    }else {
+      intake.move(0.75);
+    }
     // System.out.println("EXECUTING COMMAND");
   }
 
