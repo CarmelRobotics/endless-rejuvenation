@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.EncoderConstants;
@@ -47,26 +48,30 @@ public class DriveTrain extends SubsystemBase {
     enc_Right = new Encoder(EncoderConstants.ENCODER_2_DIO1, EncoderConstants.ENCODER_2_DIO2, false);
     enc_Left.setDistancePerPulse(EncoderConstants.DISTANCE_PER_PULSE);
     enc_Right.setDistancePerPulse(EncoderConstants.DISTANCE_PER_PULSE);
+    enc_Left.reset();
+    enc_Right.reset();
     drive.setSafetyEnabled(false);
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("ENCODERLEFT", getEncLeftDistance());
+    SmartDashboard.putNumber("ENCODERRIGHT", getEncRightDistance());
     // This method will be called once per scheduler run
   }
   public void tankDrive(double input_Left, double input_Right){
     drive.tankDrive(input_Left, input_Right);
   }
 
-  public void arcadeDrive(double input_y, double input_x){
-    drive.arcadeDrive(-input_y, input_x);
+  public void arcadeDrive(double input_y, double input_x, double input_z){
+    drive.arcadeDrive(-input_y, (input_x+(input_z*0.25)));
   }
 
   public double getEncLeftDistance() {
     return enc_Left.getDistance();
   }
   public double getEncRightDistance() {
-    return enc_Right.getDistance();
+    return -enc_Right.getDistance();
   }
   public void resetEncLeft() {
     enc_Left.reset();
@@ -74,4 +79,5 @@ public class DriveTrain extends SubsystemBase {
   public void resetEncRight() {
     enc_Right.reset();
   }
+
 }

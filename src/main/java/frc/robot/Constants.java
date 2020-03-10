@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.util.Color;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -28,8 +30,8 @@ public final class Constants {
      * 
      */
     public static final class ThreeWaySwitchConstants {
-        public static final DigitalInput SWITCH_1 = new DigitalInput(2);
-        public static final DigitalInput SWITCH_3 = new DigitalInput(3);
+        public static final DigitalInput SWITCH_1 = new DigitalInput(5);
+        public static final DigitalInput SWITCH_3 = new DigitalInput(6);
     }
     public static final class ContainerConstants{
         public static final int JOYSTICK_USB = 0;
@@ -69,7 +71,7 @@ public final class Constants {
         public static final int ENCODER_2_DIO1 = 0;
         public static final int ENCODER_2_DIO2 = 1;
         public static final int SHOOTER_ENCODER_3_PORT = 0;// analog input port 0
-        public static final double DISTANCE_PER_PULSE = 0.5*Math.PI/1024.;
+        public static final double DISTANCE_PER_PULSE = 0.0043785310;
     }
     
     public static final class ControlPanelArmConstants {
@@ -114,6 +116,7 @@ public final class Constants {
         public static final int INTAKE_PWM = 6;
         public static final int ARM_PWM = 7;
         public static final int AGITATOR_PWM = 4;
+        public static final int AGITATOR_OUT = 12;
         public static final int FEEDER_PWM = 8;
 
         public static final int TOP_LIMITSWITCH = 9;
@@ -136,7 +139,8 @@ public final class Constants {
     }
 
 	public static final class NAVXConstants {
-        public static final AHRS NAVX = new AHRS();
+        public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
+        
         double P = 0;
         double I = 0;
         double D = 0;

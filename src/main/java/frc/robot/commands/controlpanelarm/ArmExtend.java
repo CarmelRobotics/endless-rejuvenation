@@ -28,16 +28,18 @@ public class ArmExtend extends CommandBase {
   @Override
   public void execute() {
     arm.setExtender(DoubleSolenoid.Value.kReverse);
+    System.out.println("extending");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("stopping extend command");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (arm.getExtender() == DoubleSolenoid.Value.kReverse);
   }
 }

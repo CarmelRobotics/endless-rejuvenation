@@ -34,7 +34,7 @@ public class IntakeDown extends CommandBase {
     if (intake.getLimitSwitchBottom() == false) {
       intake.stopArm();
     }else {
-      intake.move(0.75);
+      intake.move(0.5);
     }
     // System.out.println("EXECUTING COMMAND");
   }

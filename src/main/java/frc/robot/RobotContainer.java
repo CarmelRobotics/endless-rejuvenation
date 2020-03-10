@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,7 @@ import frc.robot.subsystems.*;
 import frc.robot.Constants;
 import frc.robot.Constants.ControlPanelArmConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.NAVXConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonomous.*;
@@ -26,6 +28,7 @@ import frc.robot.commands.controlpanelarm.*;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.IntakeDown;
 import frc.robot.commands.intake.IntakeUp;
+import frc.robot.commands.intake.AgitateOut;
 import frc.robot.commands.shooter.Fire;
 import frc.robot.commands.turret.*;
 
@@ -52,6 +55,7 @@ public class RobotContainer {
   private final JoystickButton b_IntakeOut;
   private final JoystickButton b_intakeUp;
   private final JoystickButton b_intakeDown;
+  private final JoystickButton b_agitateOut;
   private final JoystickButton b_turretOnOff;
   private final JoystickButton b_colorControl;
   private final JoystickButton b_getEncoderVal;
@@ -63,10 +67,12 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
+    CameraServer.getInstance().startAutomaticCapture();
     b_Intake = new JoystickButton(guitar, IntakeConstants.INTAKE_BUTTON_GUITAR);
     b_IntakeOut = new JoystickButton(stick_right, 5);
     b_intakeDown = new JoystickButton(guitar, IntakeConstants.INTAKE_DOWN_BUTTON_GUITAR);
     b_intakeUp = new JoystickButton(guitar, IntakeConstants.INTAKE_UP_BUTTON_GUITAR);
+    b_agitateOut = new JoystickButton(stick_right, IntakeConstants.AGITATOR_OUT);
     b_armExtend = new JoystickButton(guitar, ControlPanelArmConstants.ARM_UP_BUTTON_GUITAR);
     b_armRetract = new JoystickButton(guitar, ControlPanelArmConstants.ARM_DOWN_BUTTON_GUITAR);
     b_rotControl = new JoystickButton(guitar, ControlPanelArmConstants.ROT_CONTROL_BUTTON_GUITAR);
@@ -87,10 +93,10 @@ public class RobotContainer {
     drive.setDefaultCommand(new RunCommand(() -> 
       drive.arcadeDrive(
         stick_right.getY(), 
-        stick_right.getX())
+        stick_right.getX(),
+        stick_right.getZ())
         ,drive
         ));
-    
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -107,11 +113,12 @@ public class RobotContainer {
     b_rotControl.whenPressed(new ControlPanelRotCtrl(cpa, 7));
     b_intakeUp.whileHeld(new IntakeUp(intake));
     b_intakeDown.whileHeld(new IntakeDown(intake));
+    b_agitateOut.whileHeld(new AgitateOut(intake));
     b_colorControl.whenPressed(new ControlPanelPosCtrl(cpa));
     b_turretOnOff.whileHeld(new Fire(intake,turret,vision));
     b_allign.whileHeld(new PivotCommand(vision,drive, turret));
-    // b_turretRotateUp.whileHeld(new Rotate_Up(turret));
-    // b_turretRotateDown.whileHeld(new Rotate_Down(turret));
+    b_turretRotateUp.whileHeld(new Rotate_Up(turret));
+    b_turretRotateDown.whileHeld(new Rotate_Down(turret));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
       turret.resetTurret()
       ,turret
@@ -130,13 +137,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    // if (Constants.ThreeWaySwitchConstants.SWITCH_1.get() == true) {
-    //   return new Auto1(drive,intake,turret,vision);
-    // }else if (Constants.ThreeWaySwitchConstants.SWITCH_3.get() == true) {
-    //   return new Auto3(drive,intake,turret,vision);
-    // }else {
-    //   return new Auto2(drive,intake,turret,vision);
-    // }
-    return null;
+    return new Auto1(drive,intake,turret,vision);
+    /*
+    if (Constants.ThreeWaySwitchConstants.SWITCH_1.get() == true) {
+      return new Auto1(drive,intake,turret,vision);
+    }else if (Constants.ThreeWaySwitchConstants.SWITCH_3.get() == true) {
+      return new Auto3(drive,intake,turret,vision);
+    }else {
+      return new Auto2(drive,intake,turret,vision);
+    }
+    */
   }
 }

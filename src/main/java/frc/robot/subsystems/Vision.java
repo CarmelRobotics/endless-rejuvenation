@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Vision extends SubsystemBase {
     static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     static NetworkTableEntry tv = table.getEntry("tv");
@@ -23,10 +24,12 @@ public class Vision extends SubsystemBase {
 
     } 
     public double getDistanceEstimation() {
-        return sonar.getValue()/13.888888;
+        // return sonar.getValue()/13.888888;
+        return sonar.getValue()*0.0047 + 0.4476;
+        
     }
     public double getDistanceEstimation2() {
-        return sonar.getValue()/13.888888;
+        return sonar2.getValue()/13.888888;
     }
     
     
@@ -68,7 +71,7 @@ public class Vision extends SubsystemBase {
 
     @Override
     public void periodic() {
-        
+        SmartDashboard.putNumber("SONAR VALUE", getDistanceEstimation());
     }
 
 }

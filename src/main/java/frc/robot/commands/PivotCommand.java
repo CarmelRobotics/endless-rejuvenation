@@ -35,20 +35,21 @@ public class PivotCommand extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
+    turret.resetNAVX();
   }
 
   void turnAtSpeed(double speed) {
     d.tankDrive(speed, -speed);
   }
   boolean turnToAngle(double angle, double error) {
-    double angleAt = Math.abs(turret.getNAVXAngle());
+    double angleAt = Math.abs(turret.getNAVXValue());
     // double angleDiff = Math.abs(turret.getNAVXAngle())-angle;
     double diff = Math.abs(angleAt-angle);
     // double maxSpeed = angle/100;
     double speed = 0.45;
 
     if (diff < error + 10) {
-      speed = 0.25;
+      speed = 0.35;
     }
     if (diff < error) {
       turret.rotateStop();
@@ -71,16 +72,19 @@ public class PivotCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
+    double angleToTurnTo = turret.solveForDegrees(vision.getDistanceEstimation());
     SmartDashboard.putNumber("TURRET ANGLE", turret.getNAVXAngle());
+    SmartDashboard.putNumber("ANGLE TO TURN TO", turret.solveForDegrees(vision.getDistanceEstimation()/12));
+    turnAtSpeed(vision.pivotToTarget(0.5,0.3,0.1));
+
     // System.out.println("Turret angle is " + turret.getNAVXAngle());
-    // try {
-    //   if (turnToAngle(45, 1) == true) {
-    //     turret.rotateStop();
-    //     // turnAtSpeed(vision.pivotToTarget(0.5,0.3,0.1));
-    //   }
-    // } catch (NullPointerException e) {
-    //   System.out.println("Caught Exception");
-    // }
+    try {
+      if (turnToAngle(angleToTurnTo, 1) == true || turret.isOutsideRange() == true) {
+        turret.rotateStop();
+      }
+    } catch (NullPointerException e) {
+      System.out.println("Caught Exception");
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
