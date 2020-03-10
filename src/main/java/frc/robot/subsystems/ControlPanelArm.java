@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -100,6 +101,9 @@ public class ControlPanelArm extends SubsystemBase {
    */
   public void setExtender(DoubleSolenoid.Value v){
     extender.set(v);
+  }
+  public Value getExtender() {
+    return extender.get();
   }
   @Override
   public void periodic() {

@@ -5,18 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.controlpanelarm;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ControlPanelArm;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.subsystems.Intake;
 
-public class ArmRetract extends CommandBase {
-  ControlPanelArm arm;
-  public ArmRetract(ControlPanelArm a) {
+public class AgitateOut extends CommandBase {
+  Intake intake;
+  public AgitateOut(Intake i) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(a);
-    arm = a;
+    addRequirements(i);
+    intake = i;
   }
 
   // Called when the command is initially scheduled.
@@ -27,19 +26,18 @@ public class ArmRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.setExtender(DoubleSolenoid.Value.kForward);
-    System.out.println("retracting");
+    intake.agitate(0.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("ending retract command");
+    intake.agitate(0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (arm.getExtender() == DoubleSolenoid.Value.kForward);
+    return false;
   }
 }

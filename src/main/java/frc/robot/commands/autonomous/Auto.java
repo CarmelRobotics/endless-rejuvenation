@@ -26,12 +26,12 @@ public class Auto extends SequentialCommandGroup {
   public Auto(DriveTrain d, Intake i, Turret t, Vision v) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    if (ThreeWaySwitchConstants.SWITCH_1.get() == true) {
-      addCommands(new Auto1(d,i,t,v));
-    }else if (ThreeWaySwitchConstants.SWITCH_3.get() == true) {
-      addCommands(new Auto3(d,i,t,v));
-    }else {
-      addCommands(new Auto2(d,i,t,v));
-    }
+    // if (ThreeWaySwitchConstants.SWITCH_1.get() == true) {
+    //   addCommands(new Auto1(d,i,t,v));
+    // }else if (ThreeWaySwitchConstants.SWITCH_3.get() == true) {
+    //   addCommands(new Auto3(d,i,t,v));
+    // }else {
+    //   addCommands(new Auto2(d,i,t,v));
+    // }
   }
 }

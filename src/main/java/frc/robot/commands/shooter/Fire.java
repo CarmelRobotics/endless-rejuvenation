@@ -60,12 +60,12 @@ public class Fire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angleToTurnTo = turret.getAngleToTurnTo(ballVel, vision.getDistanceEstimation()/12, 32.2);
     System.out.println("NAVX VALUE: " + Math.abs(turret.getNAVXAngle()));
     // if (turnToAngle(45, 1.0)) {
+    intake.in(-0.75);
     turret.rotateStop();
     turret.shoot();
-    intake.agitate(-0.5);
+    intake.agitate(-0.75);
     
   }
 
@@ -75,6 +75,7 @@ public class Fire extends CommandBase {
     turret.stop();
     intake.stopAgitate();
     turret.rotateStop();
+    intake.stopRoller();
   }
 
   // Returns true when the command should end.

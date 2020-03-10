@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SerialPort;
 public class Turret extends SubsystemBase {
-  private AHRS navx = new AHRS(SerialPort.Port.kUSB);
+  private AHRS navx = new AHRS(SerialPort.Port.kMXP);
 
   private CANSparkMax shooterL;
   private CANSparkMax shooterR;
@@ -71,26 +71,25 @@ public class Turret extends SubsystemBase {
   public void resetNAVX() {
     navx.reset();
   }
-  public double getAngleToTurnTo(double ballVel,double targetDist) {
-    //ft per second
-    double gravity = 32.2;
-    double targetHeight = 98.25;
-    double turretHeight = 19.25/12;
-    double deltaY = targetHeight-turretHeight;
-    double value1 = Math.sqrt(Math.pow(ballVel, 4)-gravity*(gravity*Math.pow(targetDist, 2)+2*deltaY*Math.pow(ballVel,2)));
-    double angle1 = (Math.atan(ballVel-value1))/(gravity*targetDist);
-    double angle2 = (Math.atan(ballVel+value1))/(gravity*targetDist);
-    // if (ballVel > value1) {
-    //   return (Math.atan(ballVel-value1))/(gravity*targetDist);
-    // }else {
-    //   return (Math.atan(ballVel+value1))/(gravity*targetDist);
-    // }
-    if (angle1>angle2) {
-      return angle2;
-    }else {
-      return angle1;
-    }
-  }
+  // public double getAngleToTurnTo(double ballVel,double targetDist) {
+  //   //ft per second
+  //   double gravity = 32.2;
+  //    double turretHeight = 19.25/12;
+  //   double deltaY = targetHeight-turretHeight;
+  //   double value1 = Math.sqrt(Math.pow(ballVel, 4)-gravity*(gravity*Math.pow(targetDist, 2)+2*deltaY*Math.pow(ballVel,2)));
+  //   double angle1 = (Math.atan(ballVel-value1))/(gravity*targetDist);
+  //   double angle2 = (Math.atan(ballVel+value1))/(gravity*targetDist);
+  //   // if (ballVel > value1) {
+  //   //   return (Math.atan(ballVel-value1))/(gravity*targetDist);
+  //   // }else {
+  //   //   return (Math.atan(ballVel+value1))/(gravity*targetDist);
+  //   // }
+  //   if (angle1>angle2) {
+  //     return angle2;
+  //   }else {
+  //     return angle1;
+  //   }
+  // }
 
   public void shoot(){
     // shooter.set(1);
@@ -109,9 +108,21 @@ public class Turret extends SubsystemBase {
     windowMotor.setSpeed(-speed);
 
   }
+  public boolean isOutsideRange() {
+    if (encoder.get() < 0.885) {
+      return false;
+    }else if (encoder.get()>0.01) { 
+      return false;
+    }else {
+      return true;
+    }
+  }
+  public double solveForDegrees(double dist) {
+    return (-0.0098*Math.pow(dist,3))+(0.4974*Math.pow(dist,2))-(9.0509*dist)+89.728;
+  }
 
-  double getEncoderValue() {
-    return encoder.get();
+  public double getEncoderValue() {
+    return -86.892*encoder.get() + 73.098;
   }
 
   public void rotateStop(){
@@ -124,7 +135,7 @@ public class Turret extends SubsystemBase {
        System.out.println("LEFT SHOOTER IS STILL NULL");
      }else {
        shooterL.set(0);
-       shooterR.set(0);  
+       shooterR.set(0);
      }
      elevator.stopMotor();
   }
@@ -166,7 +177,8 @@ public class Turret extends SubsystemBase {
 //  }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ENCODER VALUE", getEncoderValue());
+    SmartDashboard.putNumber("ENCODER", getEncoderValue());
     // This method will be called once per scheduler run
+    double testDist = 10;
   }
 }
