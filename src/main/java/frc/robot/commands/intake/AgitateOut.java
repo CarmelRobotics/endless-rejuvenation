@@ -26,7 +26,7 @@ public class AgitateOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.agitate(0.5);
+    intake.agitate(0.666);
   }
 
   // Called once the command ends or is interrupted.

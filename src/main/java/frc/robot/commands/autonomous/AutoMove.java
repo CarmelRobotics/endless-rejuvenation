@@ -24,17 +24,22 @@ public class AutoMove extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("running AutoMove");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     encDiff = drive.getEncLeftDistance() - drive.getEncRightDistance();
+    System.out.println("encoder difference: " + encDiff);
     if (encDiff > 0.008) { //at wheel dist = 22.5 in, assuming no skid, this allows 0.2 degree drift before correcting (four encoder steps)
+      System.out.println("correcting left turn");
       drive.tankDrive(0.9, 1.0); //CALIBRATE
     } else if (encDiff < -0.008) {
+      System.out.println("correcting right turn");
       drive.tankDrive(1.0, 0.9); //CALIBRATE
     } else {
+      System.out.println("driving forward");
       drive.tankDrive(1.0, 1.0);
     }
     System.out.println("Left dist: " + drive.getEncLeftDistance() + "Right dist: " + drive.getEncRightDistance());
@@ -46,6 +51,7 @@ public class AutoMove extends CommandBase {
   public void end(boolean interrupted) {
     drive.resetEncLeft();
     drive.resetEncRight();
+    System.out.println("ending auto move");
   }
 
   // Returns true when the command should end.

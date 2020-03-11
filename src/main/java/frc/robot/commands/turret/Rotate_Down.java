@@ -29,7 +29,7 @@ public class Rotate_Down extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    t.rotate(-0.45);
+    t.rotate(-0.20);
   }
 
   // Called once the command ends or is interrupted.

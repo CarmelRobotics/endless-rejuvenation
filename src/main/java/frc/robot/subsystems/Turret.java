@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SerialPort;
 public class Turret extends SubsystemBase {
-  private AHRS navx = new AHRS(SerialPort.Port.kMXP);
+  private AHRS navx = new AHRS(SerialPort.Port.kUSB);
 
   private CANSparkMax shooterL;
   private CANSparkMax shooterR;
@@ -97,8 +97,8 @@ public class Turret extends SubsystemBase {
     if (shooterL == null) {
        System.out.println("LEFT SHOOTER IS NULL");
      }else {
-       shooterL.set(-1);
-       shooterR.set(1);
+       shooterL.set(1);
+       shooterR.set(-1);
      }
 
   }
@@ -118,7 +118,7 @@ public class Turret extends SubsystemBase {
     }
   }
   public double solveForDegrees(double dist) {
-    return (-0.0098*Math.pow(dist,3))+(0.4974*Math.pow(dist,2))-(9.0509*dist)+89.728;
+    return (-0.0208*Math.pow(dist,3))+(0.817*Math.pow(dist,2))+(-11*dist)+89.4;
   }
 
   public double getEncoderValue() {
@@ -177,7 +177,7 @@ public class Turret extends SubsystemBase {
 //  }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ENCODER", getEncoderValue());
+    SmartDashboard.putNumber("NAVX", getNAVXValue());
     // This method will be called once per scheduler run
     double testDist = 10;
   }

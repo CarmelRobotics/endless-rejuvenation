@@ -23,6 +23,7 @@ public class Auto1 extends SequentialCommandGroup {
    * Creates a new Auto.
    */
   public Auto1(DriveTrain d, Intake i, Turret t, Vision v) {
+    System.out.println("Running Auto1");
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
     addCommands(new AutoMove(d, 3),
