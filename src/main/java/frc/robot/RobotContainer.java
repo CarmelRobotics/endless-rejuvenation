@@ -137,12 +137,12 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new Auto1(drive,intake,turret,vision);
+    return new AutoTest(drive,3);
     /*
     if (Constants.ThreeWaySwitchConstants.SWITCH_1.get() == true) {
       return new Auto1(drive,intake,turret,vision);
     }else if (Constants.ThreeWaySwitchConstants.SWITCH_3.get() == true) {
-      return new Auto3(drive,intake,turret,vision);
+      return new Auto3(drive,intake,turreSt,vision);
     }else {
       return new Auto2(drive,intake,turret,vision);
     }

@@ -31,11 +31,26 @@ public class ControlPanelPosCtrl extends CommandBase {
   public void initialize() {
     System.out.println("RUN COMMAND... COOL..");
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
-    if(gameData.length() > 0){
-      desiredColor = gameData.charAt(0);
+    if(gameData.length() > 0) {
+      colorReached = false;
+    }else{
+      colorReached = true;
     }
     System.out.println("GameData: " + gameData);
-    colorReached = false;
+    switch (gameData.charAt(0)) {
+      case 'R':
+        desiredColor = 'B';
+        break;
+      case 'G':
+        desiredColor = 'Y';
+        break;
+      case 'B':
+        desiredColor = 'R';
+        break;
+      case 'Y':
+        desiredColor = 'G';
+        break;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

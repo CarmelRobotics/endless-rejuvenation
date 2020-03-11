@@ -26,6 +26,7 @@ public class AutoTurn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("running AutoTurn");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,8 +36,10 @@ public class AutoTurn extends CommandBase {
       double navXAngle = Constants.NAVXConstants.NAVX.getYaw();
       if (navXAngle < angle - error) {
         drive.tankDrive(-speed, speed);
+        System.out.println("turning right");
       }else if (navXAngle > angle + error){
         drive.tankDrive(speed, -speed);
+        System.out.println("turning left");
       }else{
         done = true;
       }
@@ -46,6 +49,7 @@ public class AutoTurn extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("AutoTurn finished");
   }
 
   // Returns true when the command should end.

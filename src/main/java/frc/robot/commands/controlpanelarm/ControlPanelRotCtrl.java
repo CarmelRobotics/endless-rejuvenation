@@ -38,6 +38,8 @@ public class ControlPanelRotCtrl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (initialColor == '?')
+      initialColor = arm.detectColor();
     arm.spin(0.22);
     currentColor = arm.detectColor();
     if (currentColor != '?') {

@@ -14,8 +14,10 @@ import frc.robot.subsystems.DriveTrain;
 public class AutoTest extends CommandBase {
   private DriveTrain drive;
   private double dist;
-  public AutoTest(DriveTrain d) {
+  public AutoTest(DriveTrain d, double dist) {
     addRequirements(d);
+    drive = d;
+    this.dist = dist;
   }
 
   // Called when the command is initially scheduled.
@@ -27,6 +29,7 @@ public class AutoTest extends CommandBase {
   @Override
   public void execute() {
     dist = drive.getEncRightDistance();
+    System.out.println("distance is " + dist);
     drive.tankDrive(1.0,1.0);
   }
   
@@ -36,12 +39,13 @@ public class AutoTest extends CommandBase {
   public void end(boolean interrupted) {
     drive.resetEncLeft();
     drive.resetEncRight();
+    System.out.println("ending AutoTest");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     // return false;
-    return (drive.getEncLeftDistance() > 3);
+    return (drive.getEncLeftDistance() > dist);
   }
 }

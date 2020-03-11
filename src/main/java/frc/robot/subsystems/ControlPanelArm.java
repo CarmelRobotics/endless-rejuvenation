@@ -92,7 +92,7 @@ public class ControlPanelArm extends SubsystemBase {
    * Stops the armMotor
    */
   public void stopSpin(){
-    spin.updateDutyCycle((0*0.5+1.5)/4);
+    spin.updateDutyCycle(0.0);
   }
 
   /**
