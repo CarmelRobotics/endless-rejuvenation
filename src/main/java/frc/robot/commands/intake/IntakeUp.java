@@ -19,6 +19,7 @@ public class IntakeUp extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(i);
     intake = i;
+    System.out.println("INTAKE UP");
   }
 
   // Called when the command is initially scheduled.
@@ -29,10 +30,11 @@ public class IntakeUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    intake.move(-0.75);
+
     if (intake.getLimitSwitchTop() == true) {
-      intake.stopArm();
+      //intake.stopArm();
     }else {
-      intake.move(-0.75);
     }
   }
 

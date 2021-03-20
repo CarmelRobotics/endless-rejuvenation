@@ -19,6 +19,7 @@ public class IntakeDown extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(i);
     intake = i;
+    System.out.println("INTAKE DOWN INIT");
   }
 
   // Called when the command is initially scheduled.
@@ -31,20 +32,22 @@ public class IntakeDown extends CommandBase {
   public void execute() {
     // intake.in(-1.0);
     // intake.agitate(-1.0);
+    intake.move(0.5);
+
     if (intake.getLimitSwitchBottom() == false) {
-      intake.stopArm();
+      //intake.stopArm();
     }else {
-      intake.move(0.5);
     }
-    // System.out.println("EXECUTING COMMAND");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.stopArm();
+    System.out.println("EXECUTING COMMAND: STOP INTAKE DOWN");
+
     // intake.stopRoller();
-    // intake.stopAgitate();
+    // 2intake.stopAgitate();
   }
 
   // Returns true when the command should end.
