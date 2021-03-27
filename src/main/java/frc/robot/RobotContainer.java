@@ -62,6 +62,7 @@ public class RobotContainer {
   private final JoystickButton b_turretRotateUp;
   private final JoystickButton b_turretRotateDown;
   private final JoystickButton b_allign;
+  private final JoystickButton b_resetNAVX;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -82,6 +83,7 @@ public class RobotContainer {
     b_getEncoderVal = new JoystickButton(stick_right, TurretConstants.TURRETGETPWM);
     b_turretRotateUp = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_UP_BUTTON);
     b_turretRotateDown = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_DOWN_BUTTON);
+    b_resetNAVX = new JoystickButton(stick_right, TurretConstants.TURRET_RESET_NAVX);
     configureButtonBindings();
     /*
     drive.setDefaultCommand(new RunCommand(() -> 
@@ -119,6 +121,7 @@ public class RobotContainer {
     b_allign.whileHeld(new PivotCommand(vision,drive, turret));
     b_turretRotateUp.whileHeld(new Rotate_Up(turret));
     b_turretRotateDown.whileHeld(new Rotate_Down(turret));
+    b_resetNAVX.whenPressed(new Reset(turret));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
       turret.resetTurret()
       ,turret

@@ -64,6 +64,7 @@ public final class Constants {
         public static final int ALLIGN_BUTTON = 2;
         public static final int TURRET_ROTATE_UP_BUTTON = 7;
         public static final int TURRET_ROTATE_DOWN_BUTTON = 9;
+        public static final int TURRET_RESET_NAVX = 11;
     }
     public static final class EncoderConstants {
         public static final int ENCODER_1_DIO1 = 2;

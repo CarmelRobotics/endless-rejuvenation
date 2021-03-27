@@ -48,8 +48,9 @@ public class Turret extends SubsystemBase {
     shooterL = new CANSparkMax(TurretConstants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
     shooterR = new CANSparkMax(TurretConstants.SHOOTER_CAN_RIGHT, MotorType.kBrushless);
     windowMotor = new VictorSP(TurretConstants.WINDOW_PWM);
+    
     //encoder.reset();
-     
+    
     // turret = new DigitalOutput(5);
 
    // Shooter1 = new PWMSparkMax(9);

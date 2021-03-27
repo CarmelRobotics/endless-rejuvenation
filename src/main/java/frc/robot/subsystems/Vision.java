@@ -58,7 +58,7 @@ public class Vision extends SubsystemBase {
         return tx.getDouble(0.0);
     }
     public double getTY() {
-        return ty.getDouble(0.0);
+        return ty.getDouble(0.0)+18;
     }
 
     public boolean getVisible() {
