@@ -25,12 +25,14 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.SerialPort;
-public class Turret extends SubsystemBase {
+public class Turret extends PIDSubsystem {
   private AHRS navx = new AHRS(SerialPort.Port.kUSB);
-
+  
   private CANSparkMax shooterL;
   private CANSparkMax shooterR;
   private SpeedController turretAngleL, turretAngleR, susan;
@@ -42,9 +44,15 @@ public class Turret extends SubsystemBase {
   private PWMSparkMax Shooter2;
   private PWMVictorSPX elevator;
   private VictorSP windowMotor;
-
+  private static double P = -1;
+  private static double I = 0;
+  private static double D = 0;
+  private double lastEncoder = 0;
+  private double zero = 0;
   AnalogEncoder encoder = new AnalogEncoder(new AnalogInput(EncoderConstants.SHOOTER_ENCODER_3_PORT));
+
   public Turret() {
+    super(new PIDController(P, I, D));
     shooterL = new CANSparkMax(TurretConstants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
     shooterR = new CANSparkMax(TurretConstants.SHOOTER_CAN_RIGHT, MotorType.kBrushless);
     windowMotor = new VictorSP(TurretConstants.WINDOW_PWM);
@@ -64,8 +72,11 @@ public class Turret extends SubsystemBase {
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
     elevator = new PWMVictorSPX(TurretConstants.HOPPER2TURRET_PWM);
+    setSetpoint(45);
+    getController().setTolerance(1);
     rotateStop();
   }
+
   public double getNAVXAngle() {
     return navx.getAngle();
   }
@@ -123,7 +134,10 @@ public class Turret extends SubsystemBase {
   }
 
   public double getEncoderValue() {
-    return -86.892*encoder.get() + 73.098;
+    double value = -86.892*encoder.get();
+    value = (value+lastEncoder)/2;
+    lastEncoder = value;
+    return value;
   }
 
   public void rotateStop(){
@@ -140,10 +154,11 @@ public class Turret extends SubsystemBase {
      }
      elevator.stopMotor();
   }
-
+  public void zeroEncoder() {
+    encoder.reset();
+  }
   public double getNAVXValue() {
     // System.out.println("ENCODERVALUE: " + encoder.get());
-    // SmartDashboard.putNumber("ENCODER VALUE", encoder.get());
     return navx.getAngle();
   }
   
@@ -176,10 +191,26 @@ public class Turret extends SubsystemBase {
 //    turret.updateDutyCycle((0.25*0.5+1.5)/4);
 //    return 0;
 //  }
+  // @Override
+  // public void periodic() {
+  //   SmartDashboard.putNumber("NAVX", getNAVXValue());
+  //   // This method will be called once per scheduler run
+  //   double testDist = 10;
+  // }
+
   @Override
-  public void periodic() {
-    SmartDashboard.putNumber("NAVX", getNAVXValue());
-    // This method will be called once per scheduler run
-    double testDist = 10;
+  protected void useOutput(double output, double setpoint) {
+    // TODO Auto-generated method stub
+    System.out.println("RUNNING PID");
+    if (output < 0) {
+      output /= 4;
+    }
+    windowMotor.set(output);
+  }
+
+  @Override
+  protected double getMeasurement() {
+    // TODO Auto-generated method stub
+    return getEncoderValue();
   }
 }

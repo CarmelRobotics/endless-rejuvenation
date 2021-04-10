@@ -30,6 +30,7 @@ public class Reset extends CommandBase {
   @Override
   public void execute() {
     t.resetNAVX();
+    t.zeroEncoder();
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +41,6 @@ public class Reset extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

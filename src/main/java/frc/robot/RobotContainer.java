@@ -42,7 +42,7 @@ public class RobotContainer {
   //Subsystems
   private final DriveTrain drive = new DriveTrain();
   private final ControlPanelArm cpa = new ControlPanelArm();
-  private final Turret turret = new Turret();
+  final Turret turret = new Turret();
   private final Intake intake = new Intake();
   private final Vision vision = new Vision();
   //Joysticks
