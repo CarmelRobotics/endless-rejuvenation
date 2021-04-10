@@ -5,21 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.intake;
+package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Turret;
 
-public class IntakeDown extends CommandBase {
+public class Reset extends CommandBase {
   /**
-   * Creates a new IntakeDown.
+   * Creates a new fire.
    */
-  Intake intake;
-  public IntakeDown(Intake i) {
+  private Turret t;
+  public Reset(Turret t) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(i);
-    intake = i;
-    System.out.println("INTAKE DOWN INIT");
+    this.t = t;
+    addRequirements(t);
   }
 
   // Called when the command is initially scheduled.
@@ -30,29 +29,18 @@ public class IntakeDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // intake.in(-1.0);
-    // intake.agitate(-1.0);
-    intake.move(0.5);
-
-    if (intake.getLimitSwitchBottom() == false) {
-      //intake.stopArm();
-    }else {
-    }
+    t.resetNAVX();
+    t.zeroEncoder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopArm();
-    System.out.println("EXECUTING COMMAND: STOP INTAKE DOWN");
-
-    // intake.stopRoller();
-    // 2intake.stopAgitate();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

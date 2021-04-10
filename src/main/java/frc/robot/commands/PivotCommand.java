@@ -71,20 +71,30 @@ public class PivotCommand extends CommandBase {
   }
   // Called repeatedly when this Command is scheduled to run
   @Override
-  public void execute() {
-    double angleToTurnTo = turret.solveForDegrees(vision.getDistanceEstimation());
-    SmartDashboard.putNumber("TURRET ANGLE", turret.getNAVXAngle());
-    SmartDashboard.putNumber("ANGLE TO TURN TO", turret.solveForDegrees(vision.getDistanceEstimation()/12));
-    turnAtSpeed(vision.pivotToTarget(0.5,0.3,0.1));
-
-    // System.out.println("Turret angle is " + turret.getNAVXAngle());
-    try {
-      if (turnToAngle(angleToTurnTo, 1) == true || turret.isOutsideRange() == true) {
-        turret.rotateStop();
-      }
-    } catch (NullPointerException e) {
-      System.out.println("Caught Exception");
-    }
+  public void execute() { 
+    // double angleToTurnTo = turret.solveForDegrees(vision.getDistanceEstimation());
+    // SmartDashboard.putNumber("TURRET ANGLE", turret.getNAVXAngle());
+    // SmartDashboard.putNumber("ANGLE TO TURN TO", turret.solveForDegrees(vision.getDistanceEstimation()/12));
+    // SmartDashboard.putNumber("PIVOT SPEED", vision.pivotToTarget(0.5,0.3,0.1));
+    // turnAtSpeed(vision.pivotToTarget(0.5,0.3,0.1));
+    
+    // // System.out.println("Turret angle is " + turret.getNAVXAngle());
+    // try {
+    //   if (turnToAngle(angleToTurnTo, 1) == true || turret.isOutsideRange() == true) {
+    //     turret.rotateStop();
+    //   }
+    // } catch (NullPointerException e) {
+    //   System.out.println("Caught Exception");
+    // }
+    // if (vision.getTY() < 1.5) {
+    //   turret.rotate(-0.1);
+    // }else if (vision.getTY() > -1.5) {
+    //   turret.rotate(0.4);
+    // }else {
+    //   turret.rotate(0);
+    // }
+    turret.enable();
+    System.out.println("running PiD");
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -98,6 +108,7 @@ public class PivotCommand extends CommandBase {
   public void end(boolean interrupted) {
       System.out.print("");
       turret.rotateStop();
+      turret.disable();
   }
 
   // Called when another command which requires one or more of the same
