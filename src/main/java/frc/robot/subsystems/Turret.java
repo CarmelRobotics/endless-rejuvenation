@@ -44,13 +44,13 @@ public class Turret extends PIDSubsystem {
   private PWMSparkMax Shooter2;
   private PWMVictorSPX elevator;
   private VictorSP windowMotor;
-  private static double P = -1;
+  private static double P = -0.5;
   private static double I = 0;
   private static double D = 0;
   private double lastEncoder = 0;
   private double zero = 0;
   AnalogEncoder encoder = new AnalogEncoder(new AnalogInput(EncoderConstants.SHOOTER_ENCODER_3_PORT));
-
+  public double visionHeight = 0; //The height that the target is at from the limelight
   public Turret() {
     super(new PIDController(P, I, D));
     shooterL = new CANSparkMax(TurretConstants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
@@ -58,7 +58,7 @@ public class Turret extends PIDSubsystem {
     windowMotor = new VictorSP(TurretConstants.WINDOW_PWM);
     
     //encoder.reset();
-    
+    encoder.reset();
     // turret = new DigitalOutput(5);
 
    // Shooter1 = new PWMSparkMax(9);
@@ -72,8 +72,8 @@ public class Turret extends PIDSubsystem {
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
     elevator = new PWMVictorSPX(TurretConstants.HOPPER2TURRET_PWM);
-    setSetpoint(45);
-    getController().setTolerance(1);
+    getController().setTolerance(0.4);
+    setSetpoint(47);
     rotateStop();
   }
 
@@ -201,10 +201,14 @@ public class Turret extends PIDSubsystem {
   @Override
   protected void useOutput(double output, double setpoint) {
     // TODO Auto-generated method stub
-    System.out.println("RUNNING PID");
+    setSetpoint(35+3.5);
+
     if (output < 0) {
-      output /= 4;
-    }
+        output *= 0.3;
+     }
+    output *= 0.3;
+    System.out.println("RUNNING PID: " + output);
+
     windowMotor.set(output);
   }
 

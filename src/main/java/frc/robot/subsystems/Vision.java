@@ -58,9 +58,8 @@ public class Vision extends SubsystemBase {
         return tx.getDouble(0.0);
     }
     public double getTY() {
-        return ty.getDouble(0.0)+18;
+        return ty.getDouble(0.0);
     }
-
     public boolean getVisible() {
         return tv.getBoolean(false);
     }
@@ -72,6 +71,8 @@ public class Vision extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("SONAR VALUE", getDistanceEstimation());
+        SmartDashboard.putNumber("Target Y", getTY());
+        SmartDashboard.putNumber("Target AREA", getArea());
     }
 
 }
