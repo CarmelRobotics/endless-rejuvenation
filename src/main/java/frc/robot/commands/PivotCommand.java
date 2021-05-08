@@ -93,6 +93,7 @@ public class PivotCommand extends CommandBase {
     // }else {
     //   turret.rotate(0);
     // }
+    turret.visionHeight = vision.getTY();
     turret.enable();
     System.out.println("running PiD");
   }

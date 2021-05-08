@@ -31,6 +31,7 @@ import frc.robot.commands.intake.IntakeUp;
 import frc.robot.commands.intake.AgitateOut;
 import frc.robot.commands.shooter.Fire;
 import frc.robot.commands.turret.*;
+import frc.robot.commands.turret.lookAtTarget;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -63,6 +64,8 @@ public class RobotContainer {
   private final JoystickButton b_turretRotateDown;
   private final JoystickButton b_allign;
   private final JoystickButton b_resetNAVX;
+  private final JoystickButton b_lookAtTarget;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -84,6 +87,7 @@ public class RobotContainer {
     b_turretRotateUp = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_UP_BUTTON);
     b_turretRotateDown = new JoystickButton(stick_right, TurretConstants.TURRET_ROTATE_DOWN_BUTTON);
     b_resetNAVX = new JoystickButton(stick_right, TurretConstants.TURRET_RESET_NAVX);
+    b_lookAtTarget = new JoystickButton(stick_right, TurretConstants.TURRET_LOOK_AT_TARGET);
     configureButtonBindings();
     /*
     drive.setDefaultCommand(new RunCommand(() -> 
@@ -99,7 +103,7 @@ public class RobotContainer {
         stick_right.getZ())
         ,drive
         ));
-  }
+ }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -107,7 +111,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    
     b_IntakeOut.whenHeld(new IntakeCommand(intake,1.0));
     b_armExtend.whenPressed(new ArmExtend(cpa));
     b_armRetract.whenPressed(new ArmRetract(cpa));
@@ -122,6 +126,7 @@ public class RobotContainer {
     b_turretRotateUp.whileHeld(new Rotate_Up(turret));
     b_turretRotateDown.whileHeld(new Rotate_Down(turret));
     b_resetNAVX.whenPressed(new Reset(turret));
+    b_lookAtTarget.whileHeld(new lookAtTarget(turret, vision));
     /* b_getEncoderVal.whileHeld(new RunCommand(() -> 
       turret.resetTurret()
       ,turret
