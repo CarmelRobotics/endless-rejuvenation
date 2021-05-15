@@ -72,7 +72,7 @@ public class Turret extends PIDSubsystem {
     //turretWheel2.enablePWM(0);
     //turretWheel2.setPWMRate(200);
     elevator = new PWMVictorSPX(TurretConstants.HOPPER2TURRET_PWM);
-    getController().setTolerance(0.4);
+    getController().setTolerance(0.5);
     setSetpoint(47);
     rotateStop();
   }
@@ -197,17 +197,22 @@ public class Turret extends PIDSubsystem {
   //   // This method will be called once per scheduler run
   //   double testDist = 10;
   // }
-
+  private static double curveFit(double dist) {
+    return (-260.0559)+((131.2877)*dist)-((19.33331)*dist*dist)+((1.2004)*dist*dist*dist)+(-0.02697918*dist*dist*dist*dist);
+    // 0.225*dist*dist*dist+
+    // 0.00456*dist*dist*dist*dist;
+  }  
   @Override
   protected void useOutput(double output, double setpoint) {
     // TODO Auto-generated method stub
-    setSetpoint(35+3.5);
-
-    if (output < 0) {
-        output *= 0.3;
-     }
+    int curveFitValue = 10;
+    setSetpoint(curveFit(curveFitValue)+0.5);
+    System.out.println(curveFit(curveFitValue));
+    // if (output < 0) {
+    //     output *= 0.3;
+    //  }
     output *= 0.3;
-    System.out.println("RUNNING PID: " + output);
+    //System.out.println("RUNNING PID: " + output);
 
     windowMotor.set(output);
   }
